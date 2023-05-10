@@ -1,0 +1,12 @@
+{
+  "search.exclude": {
+    ".gitignore": true,
+    "package-lock.json": true,
+    "dist/**": true
+  },
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint",
+  ],
+  "editor.foldingImportsByDefault": true
+}

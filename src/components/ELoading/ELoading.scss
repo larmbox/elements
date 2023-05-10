@@ -1,0 +1,109 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin color-spinner($color) {
+  color: color($color, 8);
+}
+
+@mixin color-dots($color) {
+  > div {
+    color: color($color, 8);
+  }
+}
+
+.#{c('ELoading')} {
+  display: flex;
+
+  &.#{c('ELoading') + m('spinner')} {
+    width: v(size, c('ELoading'));
+    height: v(size, c('ELoading'));
+    border-width: calc(v(size, c('ELoading')) / 5);
+    border-style: solid;
+    border-color: currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: text-bottom;
+    animation: spinner 0.75s linear infinite;
+  }
+
+  &.#{c('ELoading') + m('dots')} > div {
+    display: flex;
+    > div {
+      border-width: calc(v(size, c('ELoading')) / 5);
+      border-style: solid;
+      border-color: currentColor;
+      border-radius: 50%;
+      vertical-align: text-bottom;
+      animation: dots 1.4s v(transition-type) infinite;
+      animation-delay: 0.2s;
+      margin: 0 0.06rem;
+      &:first-of-type {
+        animation-delay: 0s;
+      }
+      &:last-of-type {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  &.#{c('ELoading') + m('sm')} {
+    &.#{c('ELoading') + m('spinner')} {
+      width: v(size-sm, c('ELoading'));
+      height: v(size-sm, c('ELoading'));
+      border-width: calc(v(size-sm, c('ELoading')) / 5);
+    }
+    &.#{c('ELoading') + m('dots')} > div > div {
+      border-width: calc(v(size-sm, c('ELoading')) / 5);
+    }
+  }
+
+  &.#{c('ELoading') + m('lg')} {
+    &.#{c('ELoading') + m('spinner')} {
+      width: v(size-lg, c('ELoading'));
+      height: v(size-lg, c('ELoading'));
+      border-width: calc(v(size-lg, c('ELoading')) / 5);
+    }
+    &.#{c('ELoading') + m('dots')} > div > div {
+      border-width: calc(v(size-lg, c('ELoading')) / 5);
+    }
+  }
+
+  @mixin variants($variant) {
+    &.#{c('ELoading') + m($variant)} {
+      &.#{c('ELoading') + m('spinner')} {
+        @include color-spinner($variant);
+      }
+      &.#{c('ELoading') + m('dots')} {
+        @include color-dots($variant);
+      }
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include variants($variant);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dots {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

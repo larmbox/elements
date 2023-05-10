@@ -1,0 +1,10 @@
+.cache
+.temp
+node_modules
+
+dist
+.test-environment
+*-labox-*.tgz
+coverage
+
+nuxt

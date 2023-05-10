@@ -1,0 +1,23 @@
+{
+  "name": "vitepress-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev docs --port 7900 --host",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.31",
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "highlight.js": "^11.3.1",
+    "sass": "^1.56.2",
+    "showdown": "^2.1.0",
+    "vuelr": "^1.1.0"
+  }
+}

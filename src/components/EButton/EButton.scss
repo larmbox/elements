@@ -1,0 +1,144 @@
+@import '../../theme/imports';
+
+$name: 'EButton';
+
+@mixin button-color($color) {
+  background-color: color($color, 8);
+  border-color: color($color, 9);
+  color: contrast-tone(color($color, 8));
+
+  &:not(:disabled):not(:focus):hover {
+    background-color: color($color, 9);
+    border-color: color($color, 10);
+  }
+
+  &:not(:disabled):active {
+    background-color: color($color, 8);
+    border-color: color($color, 9);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
+  }
+
+  &:disabled {
+    background-color: color($color, 5);
+    border-color: color($color, 5);
+  }
+}
+
+@mixin button-color-outline($color) {
+  background-color: transparent;
+  border-color: color($color, 8);
+  color: color($color, 8);
+
+  &.#{c('EButton') + m('loading')} .#{c('ELoading')} {
+    color: color($color, 8);
+  }
+
+  &:not(:disabled):hover {
+    background-color: color($color, 'T10');
+    color: color($color, 8);
+  }
+
+  &:not(:disabled):active {
+    background-color: transparent;
+    color: color($color, 8);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
+  }
+
+  &:disabled {
+    border-color: color($color, 3);
+    color: color($color, 4);
+  }
+}
+
+.#{c('EButton')} {
+  transition: background-color v(transition-time) v(transition-type),
+    color v(transition-time) v(transition-type),
+    border-color v(transition-time) v(transition-type),
+    box-shadow v(transition-time) v(transition-type);
+  justify-content: center;
+  display: inline-flex;
+  border-style: solid;
+  border-width: v(border-width, c('EButton'));
+  outline: none;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  padding: v(padding-y, c('EButton')) v(padding-x, c('EButton'));
+  font-family: inherit;
+  font-weight: v(font-weight, c('EButton'));
+  border-radius: v(border-radius, c('EButton'));
+
+  line-height: v(line-height, c('EButton'));
+  font-size: v(font-size, c('EButton'));
+
+  cursor: pointer;
+  text-decoration: none;
+
+  .#{c('EButton') + e('content')} {
+    display: flex;
+    align-items: center;
+  }
+
+  @mixin button-variant($variant) {
+    &.#{c('EButton') + m($variant)} {
+      &:not(.#{c(EButton) + m('outline')}) {
+        @include button-color($variant);
+      }
+      &.#{c('EButton') + m('outline')} {
+        @include button-color-outline($variant);
+      }
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include button-variant($variant);
+  }
+
+  &.#{c('EButton') + m('icon-right')} {
+    .#{c('EIcon')}:last-of-type {
+      padding-left: calc(v(spacing) * 0.5);
+    }
+  }
+
+  &.#{c('EButton') + m('icon-left')} {
+    .#{c('EIcon')}:first-of-type {
+      padding-right: calc(v(spacing) * 0.5);
+    }
+  }
+
+  &.#{c('EButton') + m('block')} {
+    display: flex;
+    min-width: 100%;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.#{c('EButton') + m('sm')} {
+    padding: v(padding-y-sm, c('EButton')) v(padding-x-sm, c('EButton'));
+    line-height: v(line-height-sm, c('EButton'));
+  }
+
+  &.#{c('EButton') + m('lg')} {
+    padding: v(padding-y-lg, c('EButton')) v(padding-x-lg, c('EButton'));
+    line-height: v(line-height-lg, c('EButton'));
+  }
+
+  &.#{c('EButton') + m('loading')} {
+    align-items: center;
+    .#{c('ELoading')} {
+      position: absolute;
+    }
+    .#{c('EButton') + e('content')} {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}

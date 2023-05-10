@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  larmbox-elements:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '7900:7900'
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    environment:
+      - PORT=7900
+      - HOST=0.0.0.0

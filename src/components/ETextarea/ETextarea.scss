@@ -1,0 +1,147 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin textarea-highlight($color) {
+  textarea {
+    border-color: color($color, 8);
+    &:disabled {
+      border-color: color($color, 3);
+    }
+  }
+}
+
+@mixin textarea-color($color) {
+  &.#{c('ETextarea') + m('highlight')} {
+    @include textarea-highlight($color);
+  }
+
+  textarea {
+    &:focus {
+      border-color: color($color, 6);
+    }
+
+    &:not(:disabled):active {
+      border-color: color($color, 8);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
+    }
+
+    &:disabled {
+      border-color: v(border-color--disabled, c('ETextarea'));
+      color: v(text-color--disabled, c('ETextarea'));
+    }
+  }
+}
+
+.#{c('ETextarea')} {
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 100%; // Prevent resize outside container.
+
+  &.#{c('ETextarea') + m('block')} {
+    width: 100%;
+    display: flex;
+  }
+
+  .#{c('ETextarea') + e('inner')} {
+    display: flex;
+
+    .#{c('ETextarea') + e('element')} {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  textarea {
+    position: relative;
+    width: 100%;
+    max-width: 100%; // Prevent resize outside container.
+    display: inline-flex;
+    flex: 1;
+    outline: none;
+    background-color: v(background-color, c('ETextarea'));
+    transition: border-color v(transition-time) v(transition-type),
+      box-shadow v(transition-time) v(transition-type);
+    padding: v(padding-y, c('ETextarea')) v(padding-x, c('ETextarea'));
+    border-style: solid;
+    border-width: v(border-width, c('ETextarea'));
+    line-height: v(line-height, c('ETextarea'));
+    border-radius: v(border-radius, c('ETextarea'));
+    border-color: v(border-color, c('ETextarea'));
+    color: v(text-color, c('ETextarea'));
+    font: inherit;
+    font-size: v(font-size, c('ETextarea'));
+
+    &:focus {
+      background-color: v(background-color--focus, c('ETextarea'));
+      &::placeholder {
+        color: v(placeholder-color--focus, c('ETextarea'));
+      }
+    }
+
+    &::placeholder {
+      color: v(placeholder-color, c('ETextarea'));
+    }
+
+    &:disabled {
+      color: v(text-color--disabled, c('ETextarea'));
+      background-color: v(background-color--disabled, c('ETextarea'));
+      border-color: v(border-color--disabled, c('ETextarea'));
+      &::placeholder {
+        color: v(placeholder-color--disabled, c('ETextarea'));
+      }
+    }
+
+    &:focus {
+      z-index: 3;
+    }
+  }
+
+  @mixin textarea-variant($variant) {
+    &.#{c('ETextarea') + m($variant)} {
+      @include textarea-color($variant);
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include textarea-variant($variant);
+  }
+
+  &.#{c('ETextarea') + m('feedback-error')} {
+    @include textarea-color('error');
+
+    &.#{c('ETextarea') + m('highlight')} {
+      @include textarea-highlight('error');
+    }
+  }
+
+  &.#{c('ETextarea') + m('feedback-success')} {
+    @include textarea-color('success');
+
+    &.#{c('ETextarea') + m('highlight')} {
+      @include textarea-highlight('success');
+    }
+  }
+
+  &.#{c('ETextarea') + m('sm')} {
+    font-size: v(font-size-sm, c('ETextarea'));
+
+    textarea {
+      padding: v(padding-y-sm, c('ETextarea')) v(padding-x-sm, c('ETextarea'));
+      line-height: v(line-height-sm, c('ETextarea'));
+    }
+  }
+
+  &.#{c('ETextarea') + m('lg')} {
+    font-size: v(font-size-lg, c('ETextarea'));
+
+    textarea {
+      padding: v(padding-y-lg, c('ETextarea')) v(padding-x-lg, c('ETextarea'));
+      line-height: v(line-height-lg, c('ETextarea'));
+    }
+  }
+}

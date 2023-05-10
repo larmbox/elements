@@ -1,0 +1,168 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin input-highlight($color) {
+  input {
+    border-color: color($color, 8);
+    &:disabled {
+      border-color: color($color, 3);
+    }
+  }
+}
+
+@mixin input-color($color) {
+  &.#{c('EInput') + m('highlight')} {
+    @include input-highlight($color);
+  }
+
+  input {
+    &:focus {
+      border-color: color($color, 6);
+    }
+
+    &:not(:disabled):active {
+      border-color: color($color, 8);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
+    }
+
+    &:disabled {
+      border-color: v(border-color--disabled, c('EInput'));
+      color: v(text-color--disabled, c('EInput'));
+    }
+  }
+}
+
+.#{c('EInput')} {
+  display: inline-flex;
+  flex-direction: column;
+
+  &.#{c('EInput') + m('block')} {
+    width: 100%;
+    display: flex;
+  }
+
+  .#{c('EInput') + e('inner')} {
+    display: flex;
+
+    .#{c('EInput') + e('element')} {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  input {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    flex: 1;
+    outline: none;
+    background-color: v(background-color, c('EInput'));
+    transition: border-color v(transition-time) v(transition-type),
+      box-shadow v(transition-time) v(transition-type);
+    padding: v(padding-y, c('EInput')) v(padding-x, c('EInput'));
+    border-style: solid;
+    border-width: v(border-width, c('EInput'));
+    line-height: v(line-height, c('EInput'));
+    border-radius: v(border-radius, c('EInput'));
+    border-color: v(border-color, c('EInput'));
+    color: v(text-color, c('EInput'));
+    font: inherit;
+    font-size: v(font-size, c('EInput'));
+
+    &::placeholder {
+      color: v(placeholder-color, c('EInput'));
+    }
+
+    &:focus {
+      background-color: v(background-color--focus, c('EInput'));
+      &::placeholder {
+        color: v(placeholder-color--focus, c('EInput'));
+      }
+    }
+
+    &:disabled {
+      color: v(text-color--disabled, c('EInput'));
+      background-color: v(background-color--disabled, c('EInput'));
+      border-color: v(border-color--disabled, c('EInput'));
+      &::placeholder {
+        color: v(placeholder-color--disabled, c('EInput'));
+      }
+    }
+
+    &:focus {
+      z-index: 3;
+    }
+
+    &[type='color'],
+    &[type='range'] {
+      margin: 0;
+      height: calc(
+        v(font-size, c('EInput')) * v(line-height, c('EInput')) +
+          v(font-size, c('EInput'))
+      );
+    }
+  }
+
+  @mixin input-variant($variant) {
+    &.#{c('EInput') + m($variant)} {
+      @include input-color($variant);
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include input-variant($variant);
+  }
+
+  &.#{c('EInput') + m('feedback-error')} {
+    @include input-color('error');
+
+    &.#{c('EInput') + m('highlight')} {
+      @include input-highlight('error');
+    }
+  }
+
+  &.#{c('EInput') + m('feedback-success')} {
+    @include input-color('success');
+
+    &.#{c('EInput') + m('highlight')} {
+      @include input-highlight('success');
+    }
+  }
+
+  &.#{c('EInput') + m('sm')} {
+    font-size: v(font-size-sm, c('EInput'));
+
+    input {
+      padding: v(padding-y-sm, c('EInput')) v(padding-x-sm, c('EInput'));
+      line-height: v(line-height-sm, c('EInput'));
+
+      &[type='color'] {
+        height: calc(
+          v(font-size-sm, c('EInput')) * v(line-height-sm, c('EInput')) +
+            v(font-size-sm, c('EInput'))
+        );
+      }
+    }
+  }
+
+  &.#{c('EInput') + m('lg')} {
+    font-size: v(font-size-lg, c('EInput'));
+
+    input {
+      padding: v(padding-y-lg, c('EInput')) v(padding-x-lg, c('EInput'));
+      line-height: v(line-height-lg, c('EInput'));
+
+      &[type='color'] {
+        height: calc(
+          v(font-size-lg, c('EInput')) * v(line-height-lg, c('EInput')) +
+            v(font-size-lg, c('EInput'))
+        );
+      }
+    }
+  }
+}

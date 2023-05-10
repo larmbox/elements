@@ -1,0 +1,227 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin switch-highlight($color) {
+  .#{c('ESwitch') + e('box')} {
+    border-color: color($color, 8);
+  }
+  input:disabled .#{c('ESwitch') + e('box')} {
+    border-color: color($color, 3);
+  }
+}
+
+@mixin switch-size($suffix, $size) {
+  &.#{c('ESwitch') + m($suffix)} {
+    .#{c('ESwitch') + e('inner')} .#{c('ESwitch') + e('context')} {
+      margin-left: calc($size * 2 + v(spacing-xs));
+    }
+
+    .#{c('ESwitch') + e('box')} {
+      width: calc($size * 2);
+      height: $size;
+      font-size: $size;
+      padding: 2px;
+
+      .#{c('ESwitch') + e('inner-box')} {
+        width: calc($size - v(border-width, c('ESwitch')) * 2 - 2px);
+        height: calc($size - v(border-width, c('ESwitch')) * 2 - 2px);
+        font-size: calc($size - 4px);
+      }
+    }
+
+    input {
+      width: calc($size * 2);
+      height: $size;
+
+      &:checked {
+        + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
+          left: 100%;
+          transform: translateX(-100%);
+        }
+      }
+
+      &:active:not(:disabled) {
+        + .#{c('ESwitch') + e('box')} {
+          .#{c('ESwitch') + e('inner-box')} {
+            width: calc($size * 1.25 - v(border-width, c('ESwitch')) * 2);
+          }
+        }
+        &:checked {
+          + .#{c('ESwitch') + e('box')} {
+            position: relative;
+            .#{c('ESwitch') + e('inner-box')} {
+              left: 100%;
+              transform: translateX(-100%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin switch-color($color) {
+  &.#{c('ESwitch') + m('highlight')} {
+    @include switch-highlight($color);
+  }
+
+  input {
+    + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
+      // background-color: color($color, 8);
+      background-color: v(text-color);
+      color: v(border-color);
+    }
+    &:checked {
+      + .#{c('ESwitch') + e('box')} {
+        background-color: color($color, 8);
+        border-color: color($color, 9);
+
+        .#{c('ESwitch') + e('inner-box')} {
+          background-color: v(contrast-color);
+          border-color: color($color, 9);
+          color: color($color, 8);
+        }
+      }
+    }
+
+    &:focus {
+      + .#{c('ESwitch') + e('box')} {
+        border-color: color($color, 8);
+        box-shadow: 0 0 0 v(focus-shadow-size, c('ESwitch'))
+          color($color, 'T20');
+      }
+    }
+
+    &:disabled:checked {
+      + .#{c('ESwitch') + e('box')} {
+        border-color: color($color, 5);
+        background-color: color($color, 4);
+        .#{c('ESwitch') + e('inner-box')} {
+          border-color: color($color, 10);
+          color: color($color, 4);
+        }
+      }
+    }
+
+    &:disabled:not(:checked) {
+      + .#{c('ESwitch') + e('box')} {
+        background-color: v(background-color--disabled);
+        .#{c('ESwitch') + e('inner-box')} {
+          background-color: color($color, 4);
+        }
+      }
+    }
+  }
+}
+
+.#{c('ESwitch')} {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+
+  // https://stackoverflow.com/questions/48117071/element-with-display-inline-flex-has-a-strange-top-margin
+  vertical-align: middle;
+
+  &.#{c('ESwitch') + m('block')} {
+    width: 100%;
+    display: flex;
+  }
+
+  .#{c('ESwitch') + e('box')} {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    border: v(border-width, c('ESwitch')) solid v(border-color, c('ESwitch'));
+    background-color: v(background-color, c('ESwitch'));
+    border-radius: v(border-radius, c('ESwitch'));
+    box-shadow: 0 0 0 v(focus-shadow-size) transparent;
+    transition: border-color v(transition-time) v(transition-type),
+      background-color v(transition-time) v(transition-type),
+      box-shadow v(transition-time) v(transition-type);
+
+    .#{c('ESwitch') + e('inner-box')} {
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      pointer-events: none;
+      transition: left v(transition-time) v(transition-type),
+        transform v(transition-time) v(transition-type),
+        background-color v(transition-time) v(transition-type),
+        color v(transition-time) v(transition-type),
+        width v(transition-time) v(transition-type),
+        height v(transition-time) v(transition-type);
+      border-radius: v(border-radius, c('ESwitch'));
+      background-color: v(border-color);
+
+      .#{c('ESwitch') + e('icon')} {
+        position: absolute;
+        &:first-of-type {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .#{c('ESwitch') + e('inner')} {
+    > div:first-of-type {
+      display: flex;
+      align-items: center;
+
+      .#{c('EFormControl') + e('label')} {
+        display: block;
+        margin-bottom: 0;
+        padding-left: v(spacing-xs);
+      }
+    }
+  }
+
+  input {
+    position: absolute;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+
+    &:checked {
+      + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
+        .#{c('ESwitch') + e('icon')}:first-of-type {
+          opacity: 1;
+        }
+        .#{c('ESwitch') + e('icon')}:last-of-type {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  @mixin switch-variant($variant) {
+    &.#{c('ESwitch') + m($variant)} {
+      @include switch-color($variant);
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include switch-variant($variant);
+  }
+
+  &.#{c('ESwitch') + m('feedback-error')} {
+    @include switch-color('error');
+
+    &.#{c('ESwitch') + m('highlight')} {
+      @include switch-highlight('error');
+    }
+  }
+
+  &.#{c('ESwitch') + m('feedback-success')} {
+    @include switch-color('success');
+
+    &.#{c('ESwitch') + m('highlight')} {
+      @include switch-highlight('success');
+    }
+  }
+
+  @include switch-size('md', v(size, c('ESwitch')));
+  @include switch-size('sm', v(size-sm, c('ESwitch')));
+  @include switch-size('lg', v(size-lg, c('ESwitch')));
+}

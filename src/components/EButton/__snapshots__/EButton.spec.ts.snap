@@ -1,0 +1,49 @@
+// Vitest Snapshot v1
+
+exports[`disabled 1`] = `
+"<button id=\\"button\\" class=\\"EButton EButton--md EButton--primary\\" disabled=\\"true\\">
+  <!--v-if-->
+  <div class=\\"EButton-content\\">
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</button>"
+`;
+
+exports[`link types 1`] = `
+"<a id=\\"button\\" class=\\"EButton EButton--md EButton--primary\\" href=\\"/\\">
+  <!--v-if-->
+  <div class=\\"EButton-content\\">
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</a>"
+`;
+
+exports[`mount component 1`] = `
+"<button id=\\"id\\" class=\\"EButton EButton--md EButton--primary\\">
+  <!--v-if-->
+  <div class=\\"EButton-content\\">
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</button>"
+`;
+
+exports[`variant 1`] = `
+"<button id=\\"id\\" class=\\"EButton EButton--md EButton--secondary\\">
+  <!--v-if-->
+  <div class=\\"EButton-content\\">
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</button>"
+`;

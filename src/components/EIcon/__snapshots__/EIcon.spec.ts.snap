@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`i alias 1`] = `"<span class=\\"EIcon some-icon\\" aria-hidden=\\"true\\"></span>"`;
+
+exports[`mount component 1`] = `"<span class=\\"EIcon some-icon\\" aria-hidden=\\"true\\"></span>"`;

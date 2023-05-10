@@ -1,0 +1,187 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin modal-size($suffix, $size) {
+  &.#{c('EModal') + m($suffix)} .#{c('EModal') + e('inner')} {
+    max-width: $size;
+  }
+}
+
+#e-md[data-e-active='true'] {
+  .#{c('EModal') + e('backdrop')} {
+    pointer-events: all;
+    opacity: 0.66;
+  }
+}
+
+.#{c('EModal') + e('backdrop')} {
+  z-index: calc(v(z-index-modal) - 1);
+  pointer-events: none;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  opacity: 0;
+  transition: all v(transition-time) ease;
+}
+
+.#{c('EModal')} {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: v(z-index-modal);
+  pointer-events: none;
+
+  &.#{c('EModal') + m('visible')} {
+    .#{c('EModal') + e('inner')} {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .#{c('EModal') + e('inner')} {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 1.75rem auto;
+    min-height: calc(100% - (1.75rem * 2));
+    opacity: 0;
+    transition: all v(transition-time) ease;
+    transform: translateY(-10px);
+    padding: 0 v(spacing-sm);
+    pointer-events: none;
+
+    .#{c('EModal') + e('content')} {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: v(border-radius, c('EModal'));
+      background-color: v(background-color, c('EModal'));
+      border: v(border-width) solid v(border-color);
+      max-height: 80vh;
+      pointer-events: all;
+
+      .#{c('EModal') + e('header')} {
+        display: flex;
+        padding: v(spacing-md);
+        border-bottom: v(border-width) solid v(border-color);
+
+        :first-child {
+          flex: 1;
+        }
+
+        .#{c('EModal') + e('title')} {
+          color: inherit;
+          font-size: 24px;
+          margin: 0;
+        }
+
+        .#{c('EModal') + e('description')} {
+          color: v(text-color--light);
+          font-size: v(text-sm);
+          margin-top: v(spacing-xs);
+          display: block;
+          line-height: v(line-height-sm);
+        }
+
+        .#{c('EModal') + e('close')} {
+          $e-close-button-size: 30px;
+          width: $e-close-button-size;
+          height: $e-close-button-size;
+          border: none;
+          padding: 4px 8px;
+          background-color: transparent;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          line-height: 1;
+          flex-shrink: 0;
+          box-shadow: none;
+          cursor: pointer;
+          border-radius: v(border-radius, c('EModal'));
+          outline: none;
+          border: none;
+          transition: background-color v(transition-time) v(transition-type),
+            box-shadow v(transition-time) v(transition-type);
+          color: inherit;
+
+          svg {
+            fill: v(text-color);
+          }
+
+          &:hover {
+            background-color: v(background-color--hover);
+            svg {
+              fill: v(text-color--hover);
+            }
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 v(focus-shadow-size) color('primary', 'T20');
+            background-color: v(background-color--focus);
+          }
+        }
+      }
+
+      .#{c('EModal') + e('body')} {
+        overflow-y: auto;
+        max-height: calc(100vh - 108px - 3.5rem);
+        flex: 1;
+        padding: v(spacing-md);
+        &.#{c('EModal') + e('body--raw')} {
+          padding: 0;
+        }
+      }
+
+      .#{c('EModal') + e('footer')} {
+        border-bottom-left-radius: v(border-radius, c('EModal'));
+        border-bottom-right-radius: v(border-radius, c('EModal'));
+        border-top: v(border-width) solid v(border-color);
+        padding: v(spacing-md);
+        display: flex;
+        align-items: center;
+        .#{c('EModal') + e('footer-fill')} {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  @include modal-size('md', v(size, c('EModal')));
+  @include modal-size('sm', v(size-sm, c('EModal')));
+  @include modal-size('lg', v(size-lg, c('EModal')));
+
+  &.e-shake > div:not(.#{c('EModal') + e('backdrop')}) {
+    animation: e-shake 0.5s ease;
+  }
+}
+
+@keyframes e-shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

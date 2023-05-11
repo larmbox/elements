@@ -1,0 +1,157 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+@mixin radio-size($suffix, $size) {
+  &.#{c('ERadio') + m($suffix)} {
+    .#{c('ERadio') + e('inner')} .#{c('ERadio') + e('context')} {
+      margin-left: calc($size + v(spacing-xs));
+    }
+
+    .#{c('ERadio') + e('box')} {
+      padding: calc($size * 0.16667);
+      width: $size;
+      height: $size;
+    }
+
+    input {
+      width: $size;
+      height: $size;
+    }
+  }
+}
+
+@mixin radio-highlight($color) {
+  .#{c('ERadio') + e('box')} {
+    border-color: color($color, 8);
+  }
+
+  input:disabled + .#{c('ERadio') + e('box')} {
+    border-color: color($color, 8);
+  }
+}
+
+@mixin radio-color($color) {
+  &.#{c('ERadio') + m('highlight')} {
+    @include radio-highlight($color);
+  }
+
+  input {
+    &:checked {
+      + .#{c('ERadio') + e('box')} {
+        border-color: color($color, 8);
+        .#{c('ERadio') + e('inner-box')} {
+          background-color: color($color, 8);
+        }
+      }
+    }
+
+    &:focus {
+      + .#{c('ERadio') + e('box')} {
+        border-color: color($color, 8);
+        box-shadow: 0 0 0 v(focus-shadow-size, c('ERadio')) color($color, 'T20');
+      }
+    }
+
+    &:disabled:checked {
+      + .#{c('ERadio') + e('box')} {
+        border-color: color($color, 4);
+        .#{c('ERadio') + e('inner-box')} {
+          background-color: color($color, 4);
+        }
+      }
+    }
+
+    &:disabled:not(:checked) {
+      + .#{c('ERadio') + e('box')} {
+        background-color: v(background-color--disabled);
+      }
+    }
+  }
+}
+
+.#{c('ERadio')} {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+
+  // https://stackoverflow.com/questions/48117071/element-with-display-inline-flex-has-a-strange-top-margin
+  vertical-align: middle;
+
+  &.#{c('ERadio') + m('block')} {
+    width: 100%;
+    display: flex;
+  }
+
+  .#{c('ERadio') + e('box')} {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: v(border-width, c('ERadio')) solid v(border-color, c('ERadio'));
+    background-color: v(background-color);
+    border-radius: v(border-radius, c('ERadio'));
+    box-shadow: 0 0 0 v(focus-shadow-size) transparent;
+    transition: border-color v(transition-time) v(transition-type),
+      background-color v(transition-time) v(transition-type),
+      box-shadow v(transition-time) v(transition-type);
+
+    color: transparent;
+
+    .#{c('ERadio') + e('inner-box')} {
+      transition: background-color v(transition-time) v(transition-type);
+      border-radius: v(border-radius, c('ERadio'));
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .#{c('ERadio') + e('inner')} {
+    > div:first-of-type {
+      display: flex;
+      align-items: center;
+
+      .#{c('EFormControl') + e('label')} {
+        display: block;
+        margin-bottom: 0;
+        padding-left: v(spacing-xs);
+      }
+    }
+  }
+
+  input {
+    position: absolute;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  @mixin radio-variant($variant) {
+    &.#{c('ERadio') + m($variant)} {
+      @include radio-color($variant);
+    }
+  }
+
+  @each $variant in $e-palettes {
+    @include radio-variant($variant);
+  }
+
+  &.#{c('ERadio') + m('feedback-error')} {
+    @include radio-color('error');
+
+    .#{c('ERadio') + e('box')} {
+      border-color: color('error', 8);
+    }
+  }
+
+  &.#{c('ERadio') + m('feedback-success')} {
+    @include radio-color('success');
+
+    .#{c('ERadio') + e('box')} {
+      border-color: color('success', 8);
+    }
+  }
+
+  @include radio-size('md', v(size, c('ERadio')));
+  @include radio-size('sm', v(size-sm, c('ERadio')));
+  @include radio-size('lg', v(size-lg, c('ERadio')));
+}

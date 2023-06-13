@@ -371,7 +371,7 @@ const useTrapFocus = () => {
       (heading as any).focus();
     } else {
       // If no headings were found, focus on first focusable element.
-      firstFocusableElement.focus();
+      if (firstFocusableElement) firstFocusableElement.focus();
     }
   };
 

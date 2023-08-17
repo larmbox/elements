@@ -3632,7 +3632,7 @@ const Ha = /* @__PURE__ */ Y(Ba, [["render", Va]]), Ua = () => ({
   for (const t of ["auto", "top", "bottom", "right", "left"])
     e.startsWith(t) && !e.endsWith(t) && (e = e.replace(t, `${t}-`));
   return e;
-}, Xa = "0.0.28";
+}, Xa = "0.0.29";
 function os(e = {}) {
   const t = e.components || [], o = [];
   X(e, !0);

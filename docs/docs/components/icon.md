@@ -1,8 +1,8 @@
 # Icon <Tag text="<EIcon>" />
 
-The icon component provides allows you to easily use a **font-based** icon library.
+The icon component provides allows you to easily use an icon library.
 
-Elements does not include a default icon font library. This page uses the [Bootstrap Icons](https://icons.getbootstrap.com/) library to display example icons.
+Elements does not include a default icon library. This page uses the [Bootstrap Icons](https://icons.getbootstrap.com/) library to display example icons.
 
 <Snippet :code="example" />
 
@@ -11,6 +11,22 @@ Elements does not include a default icon font library. This page uses the [Boots
 The icons automatically inherit the font size of the parent container.
 
 <Snippet :code="sizes" class="gap" />
+
+## SVG `<use>`
+
+Instead of font-based icons, you can reference SVG files. Set the `type` prop
+to `svg` and provide the `href` prop, linking to an SVG file.
+
+<Snippet :code="svg" />
+
+::: tip
+Check the page source to see how this method differs from the icon-based method.
+:::
+
+::: warning
+Browsers apply the same-origin policy on `<use>` elements and do not load
+cross-origin URLs in the `href` attribute.
+:::
 
 ## Example Configuration
 
@@ -63,6 +79,10 @@ const sizes = `
 <EIcon icon="box" />
 <EIcon style="font-size: 2rem" icon="box" />
 <EIcon style="font-size: 4rem" icon="box" />
+`
+
+const svg = `
+<EIcon type="svg" href="/elements/bootstrap-icons.svg" icon="box" />
 `
 
 </script>

@@ -23,6 +23,15 @@ export const props = {
   icon: {
     type: String,
   },
+  href: {
+    type: String,
+  },
+  width: {
+    type: String,
+  },
+  height: {
+    type: String,
+  },
 };
 
 export type Props = ExtractPropTypes<typeof props>;

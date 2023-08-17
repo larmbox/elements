@@ -64,11 +64,14 @@ export declare function _useElements(options?: CreateOptions, teardown?: boolean
                 props: {
                     type?: string | undefined;
                     id?: string | undefined;
+                    height?: string | undefined;
+                    width?: string | undefined;
                     i?: string | undefined;
                     className?: string | undefined;
                     prefix?: string | undefined;
                     tag?: string | undefined;
                     icon?: string | undefined;
+                    href?: string | undefined;
                 };
             };
             EInput: {
@@ -350,11 +353,14 @@ export declare function useElements(): {
                 props: {
                     type?: string | undefined;
                     id?: string | undefined;
+                    height?: string | undefined;
+                    width?: string | undefined;
                     i?: string | undefined;
                     className?: string | undefined;
                     prefix?: string | undefined;
                     tag?: string | undefined;
                     icon?: string | undefined;
+                    href?: string | undefined;
                 };
             };
             EInput: {

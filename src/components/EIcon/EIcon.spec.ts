@@ -44,8 +44,21 @@ test('types', () => {
     },
   });
 
+  const component3 = mount(EIcon, {
+    props: {
+      type: 'svg',
+      icon: 'some-icon',
+    },
+  });
+
   expect(component1.text()).toEqual('i-some-icon');
   expect(component2.classes()).toEqual(['EIcon', 'i-some-icon']);
+
+  expect(component3.element.tagName).toEqual('SVG');
+  expect(component3.element.children[0].tagName).toEqual('USE');
+  expect(component3.element.children[0].getAttribute('href')).toContain(
+    '#some-icon'
+  );
 });
 
 test('inherit attributes', async () => {

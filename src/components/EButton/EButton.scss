@@ -83,6 +83,7 @@ $name: 'EButton';
   .#{c('EButton') + e('content')} {
     display: flex;
     align-items: center;
+    column-gap: calc(v(spacing) * 0.5);
   }
 
   @mixin button-variant($variant) {
@@ -98,18 +99,6 @@ $name: 'EButton';
 
   @each $variant in $e-palettes {
     @include button-variant($variant);
-  }
-
-  &.#{c('EButton') + m('icon-right')} {
-    .#{c('EIcon')}:last-of-type {
-      padding-left: calc(v(spacing) * 0.5);
-    }
-  }
-
-  &.#{c('EButton') + m('icon-left')} {
-    .#{c('EIcon')}:first-of-type {
-      padding-right: calc(v(spacing) * 0.5);
-    }
   }
 
   &.#{c('EButton') + m('block')} {

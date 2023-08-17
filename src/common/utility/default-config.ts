@@ -42,6 +42,8 @@ const config: Config = {
         prefix: '',
         tag: 'span',
         type: 'class',
+        width: '1em',
+        height: '1em',
       },
       options: {},
     },

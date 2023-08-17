@@ -30,13 +30,26 @@ const meta: ComponentDocs<EIconComponent> = {
       name: 'type',
       type: 'string',
       default: config.components.EIcon.props.type,
-      description: 'Possible values are **"class"** or **"inline"**.',
+      description:
+        'Possible values are **"class"**, **"inline"** or **"svg"**.',
     },
     {
       name: 'tag',
       type: 'string',
       default: config.components.EIcon.props.tag,
       description: 'The tag type to render the icon in.',
+    },
+    {
+      name: 'width',
+      type: 'string',
+      default: config.components.EIcon.props.width,
+      description: 'Only applies if type is "svg".',
+    },
+    {
+      name: 'height',
+      type: 'string',
+      default: config.components.EIcon.props.height,
+      description: 'Only applies if type is "svg".',
     },
   ],
   slots: [],

@@ -19,6 +19,15 @@ export declare const props: {
     icon: {
         type: StringConstructor;
     };
+    href: {
+        type: StringConstructor;
+    };
+    width: {
+        type: StringConstructor;
+    };
+    height: {
+        type: StringConstructor;
+    };
     id: {
         type: StringConstructor;
     };

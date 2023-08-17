@@ -9,7 +9,7 @@
   />
   <component
     :is="props.tag"
-    v-else
+    v-else-if="props.type === 'class'"
     :class="[
       css.base(),
       props.className,
@@ -18,6 +18,17 @@
     aria-hidden="true"
     v-bind="bindAttrs()"
   />
+  <svg
+    v-else
+    fill="currentColor"
+    :class="[css.base(), props.className]"
+    aria-hidden="true"
+    :width="props.width"
+    :height="props.height"
+    v-bind="bindAttrs()"
+  >
+    <use :href="`${props.href}#${props.icon || props.i}`"></use>
+  </svg>
 </template>
 
 <script lang="ts">

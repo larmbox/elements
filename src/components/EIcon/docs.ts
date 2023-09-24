@@ -51,6 +51,12 @@ const meta: ComponentDocs<EIconComponent> = {
       default: config.components.EIcon.props.height,
       description: 'Only applies if type is "svg".',
     },
+    {
+      name: 'sprite',
+      type: 'string',
+      default: config.components.EIcon.props.sprite,
+      description: 'Path to the sprite file. Only applies if type is "svg".',
+    },
   ],
   slots: [],
   events: [],

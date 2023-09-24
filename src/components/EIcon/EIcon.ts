@@ -23,7 +23,7 @@ export const props = {
   icon: {
     type: String,
   },
-  href: {
+  sprite: {
     type: String,
   },
   width: {

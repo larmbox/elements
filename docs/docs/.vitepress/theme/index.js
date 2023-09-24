@@ -56,11 +56,10 @@ export default {
             EIcon: {
               name: 'f601dd',
               props: {
-                href: '/elements/bootstrap-icons.svg',
                 tag: 'i',
-                type: 'href',
-                prefix: 'bi-',
+                type: 'class',
                 className: 'icon',
+                prefix: 'bi-'
               },
             },
           },

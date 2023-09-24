@@ -46,6 +46,13 @@ test('types', () => {
 
   const component3 = mount(EIcon, {
     props: {
+      type: 'sprite',
+      icon: 'some-icon',
+    },
+  });
+
+  const component4 = mount(EIcon, {
+    props: {
       type: 'svg',
       icon: 'some-icon',
     },
@@ -58,6 +65,12 @@ test('types', () => {
   expect(component3.element.children[0].tagName).toEqual('USE');
   expect(component3.element.children[0].getAttribute('href')).toContain(
     '#some-icon'
+  );
+
+  expect(component4.element.tagName).toEqual('SVG');
+  expect(component4.element.children[0].tagName).toEqual('IMAGE');
+  expect(component4.element.children[0].getAttribute('href')).toEqual(
+    'some-icon'
   );
 });
 

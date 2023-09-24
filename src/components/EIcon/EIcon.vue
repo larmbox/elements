@@ -27,7 +27,11 @@
     :height="props.height"
     v-bind="bindAttrs()"
   >
-    <use :href="`${props.href}#${props.icon || props.i}`"></use>
+    <use
+      v-if="props.type === 'svg' && props.sprite"
+      :href="`${props.sprite}#${props.prefix}${props.icon || props.i}`"
+    />
+    <image v-else :href="`${props.prefix}${props.icon || props.i}`" />
   </svg>
 </template>
 

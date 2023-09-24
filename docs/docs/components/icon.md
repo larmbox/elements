@@ -12,12 +12,19 @@ The icons automatically inherit the font size of the parent container.
 
 <Snippet :code="sizes" class="gap" />
 
-## SVG `<use>`
+## SVG
 
 Instead of font-based icons, you can reference SVG files. Set the `type` prop
 to `svg` and provide the `href` prop, linking to an SVG file.
 
 <Snippet :code="svg" />
+
+### Sprite
+
+Instead of using a separate SVG file for each icon, you can use SVG sprites by
+adding the `sprite` prop:
+
+<Snippet :code="sprite" />
 
 ::: tip
 Check the page source to see how this method differs from the icon-based method.
@@ -82,7 +89,11 @@ const sizes = `
 `
 
 const svg = `
-<EIcon type="svg" href="/elements/bootstrap-icons.svg" icon="box" />
+<EIcon type="svg" icon="/elements/test-icon.svg" />
+`
+
+const sprite = `
+<EIcon type="svg" sprite="/elements/bootstrap-icons.svg" prefix="" icon="box" />
 `
 
 </script>

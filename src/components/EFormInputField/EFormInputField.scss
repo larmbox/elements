@@ -1,0 +1,42 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+$form: c('EFormInput');
+$component: c('EFormInputField');
+
+.#{$component} {
+  &.#{$component}.#{$form}--feedback.#{$form}--highlight {
+    input,
+    select,
+    textarea {
+      &:not(:focus) {
+        border-color: variant('feedback', 'border-color');
+
+        &:not(:disabled):active {
+          border-color: variant('feedback', 'border-color', 'active');
+        }
+
+        &:not(:disabled):hover {
+          border-color: variant('feedback', 'border-color', 'hover');
+        }
+      }
+
+      &:disabled {
+        border-color: variant('feedback', 'border-color', 'disabled');
+      }
+    }
+  }
+
+  .#{c('EFormFeedback')},
+  .#{c('EFormHint')} {
+    margin-top: calc(v(spacing-xs) / 2);
+  }
+
+  .#{c('EFormDescription')} {
+    margin-bottom: calc(v(spacing-xs) / 2);
+  }
+
+  .#{c('EFormDescription')} {
+    margin-top: 0;
+  }
+}

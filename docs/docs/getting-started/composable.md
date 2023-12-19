@@ -10,7 +10,7 @@ To import useElements:
 import { useElements } from '@larmbox/elements';
 ```
 
-You can then use it:
+You can then use it to access various functions and properties:
 
 ```vue
 <script lang="ts">
@@ -25,29 +25,3 @@ export default defineComponent({
 });
 </script>
 ```
-
-## Exports
-
-:::warning
-This section is incomplete.
-:::
-
-### config
-
-The Elements config object.
-
-### modal
-
-Method to open a modal.
-
-### uuid
-
-Returns a random string.
-
-### theme
-
-The current Elements theme.
-
-### setTheme
-
-Sets the Elements theme.

@@ -1,11 +1,8 @@
 {
   "name": "@larmbox/elements",
-  "service": "larmbox-elements",
-  "dockerComposeFile": "docker-compose.yml",
-  "workspaceFolder": "/workspace",
+  "image": "node:18",
   "extensions": [
     "EditorConfig.EditorConfig",
-    "eamodio.gitlens",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "Vue.volar"

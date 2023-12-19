@@ -1,7 +1,7 @@
 @use 'variables';
 
 // Screenreader class.
-.#{variables.$e-screen-reader-class} {
+.ESr {
   position: absolute;
   width: 1px;
   height: 1px;

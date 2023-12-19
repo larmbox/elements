@@ -8,18 +8,9 @@ body {
   color: v(text-color);
 }
 
-#e {
-  position: relative;
+[data-focus-target='true'] {
+  outline: none;
+  border: none;
   height: 0;
-  z-index: v(z-index-base);
-  #e-md {
-    width: 0;
-    height: 0;
-    z-index: v(z-index-modal);
-  }
-  #e-tt {
-    width: 0;
-    height: 0;
-    z-index: v(z-index-tooltip);
-  }
+  width: 0;
 }

@@ -1,109 +1,369 @@
-import { ExtractPropTypes, PropType } from 'vue';
-import { PartialBy, RequiredBy } from '../../common/types';
-export declare const style: {
-    'border-radius': string;
-    'border-width': string;
-    'border-color': string;
-    'border-color--disabled': string;
-    'text-color': string;
-    'text-color--hover': string;
-    'text-color--focus': string;
-    'text-color--disabled': string;
-    'placeholder-color': string;
-    'placeholder-color--hover': string;
-    'placeholder-color--focus': string;
-    'placeholder-color--disabled': string;
-    'background-color': string;
-    'background-color--hover': string;
-    'background-color--focus': string;
-    'background-color--disabled': string;
-    'padding-x': string;
-    'padding-y': string;
-    'font-size': string;
-    'line-height': string;
-    'padding-x-sm': string;
-    'padding-y-sm': string;
-    'font-size-sm': string;
-    'line-height-sm': string;
-    'padding-x-lg': string;
-    'padding-y-lg': string;
-    'font-size-lg': string;
-    'line-height-lg': string;
+import { PropType } from 'vue';
+import { ComponentName } from '../../common/enums';
+import { ComponentConfiguration } from '../../common/types';
+import { BlockSlots } from '../../composables/useBlock';
+import { ComponentSlots } from '../../composables/useComponent';
+import { DisabledSlots } from '../../composables/useDisabled';
+import { InputFieldSlots } from '../../composables/useInput';
+import { VariantSlots } from '../../composables/useVariant';
+declare const configuration: {
+    readonly name: ComponentName.ETextarea;
+    readonly props: {
+        readonly variant: {
+            readonly _preset: true;
+            readonly type: PropType<string>;
+        };
+        readonly rows: {
+            readonly type: PropType<number>;
+            readonly default: undefined;
+        };
+        readonly cols: {
+            readonly type: PropType<number>;
+            readonly default: undefined;
+        };
+        readonly resize: {
+            readonly type: PropType<"both" | "none" | "horizontal" | "vertical">;
+            readonly _preset: true;
+        };
+        readonly value: {
+            readonly type: PropType<string | number>;
+            readonly default: undefined;
+        };
+        readonly modelValue: {
+            readonly type: PropType<string | number>;
+            readonly default: undefined;
+        };
+        readonly placeholder: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly readonly: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly hint: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly autocomplete: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly label: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly autofocus: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly description: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly name: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly required: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly ariaInvalid: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly ariaRequired: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly ariaLabelledby: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly ariaDescribedby: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly ariaErrormessage: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly feedback: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly highlight: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly disabled: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly id: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly block: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+    };
+    readonly emits: {
+        readonly 'update:modelValue': (value: unknown) => boolean;
+        readonly input: (event: Event) => boolean;
+    };
+    readonly style: {
+        readonly 'padding-x': "calc(var(--spacing) * 0.75)";
+        readonly 'padding-y': "calc(var(--spacing) * 0.25)";
+        readonly 'font-size': "var(--font-size-md)";
+        readonly 'line-height': "var(--line-height)";
+        readonly 'focus-shadow-size': "var(--focus-shadow-size)";
+        readonly 'border-radius': "var(--border-radius)";
+        readonly 'border-width': "var(--border-width)";
+        readonly 'border-color': "var(--border-color)";
+        readonly 'border-color--disabled': "var(--border-color--disabled)";
+        readonly 'text-color': "var(--text-color)";
+        readonly 'text-color--disabled': "var(--text-color--disabled)";
+        readonly 'placeholder-color': "var(--placeholder-color)";
+        readonly 'placeholder-color--disabled': "var(--placeholder-color--disabled)";
+        readonly 'background-color': "var(--background-color)";
+        readonly 'background-color--disabled': "var(--background-color--disabled)";
+    };
 };
-export declare const props: {
-    rows: {
-        type: NumberConstructor;
+type ETextarea = ComponentConfiguration<typeof configuration, BlockSlots & ComponentSlots & DisabledSlots & InputFieldSlots & VariantSlots>;
+declare const ETextarea: import("vue").DefineComponent<{
+    readonly variant: {
+        readonly _preset: true;
+        readonly type: PropType<string>;
     };
-    cols: {
-        type: NumberConstructor;
+    readonly rows: {
+        readonly type: PropType<number>;
+        readonly default: undefined;
     };
-    resize: {
-        type: PropType<"both" | "none" | "horizontal" | "vertical">;
-        default: string;
-        required: boolean;
+    readonly cols: {
+        readonly type: PropType<number>;
+        readonly default: undefined;
     };
-    block: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly resize: {
+        readonly type: PropType<"both" | "none" | "horizontal" | "vertical">;
+        readonly _preset: true;
     };
-    variant: {
-        type: PropType<string>;
+    readonly value: {
+        readonly type: PropType<string | number>;
+        readonly default: undefined;
     };
-    size: {
-        type: PropType<string>;
+    readonly modelValue: {
+        readonly type: PropType<string | number>;
+        readonly default: undefined;
     };
-    disabled: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly placeholder: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    placeholder: {
-        type: StringConstructor;
+    readonly readonly: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    readonly: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly hint: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    hint: {
-        type: StringConstructor;
+    readonly autocomplete: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    autocomplete: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly label: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    value: {
-        type: PropType<string | number>;
-        default: undefined;
+    readonly autofocus: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    modelValue: {
-        type: PropType<string | number>;
+    readonly description: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    label: {
-        type: StringConstructor;
+    readonly name: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    autofocus: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly required: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    description: {
-        type: StringConstructor;
+    readonly ariaInvalid: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    name: {
-        type: StringConstructor;
+    readonly ariaRequired: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    feedback: {
-        type: StringConstructor;
+    readonly ariaLabelledby: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    feedbackType: {
-        type: StringConstructor;
-        default: string;
+    readonly ariaDescribedby: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    highlight: {
-        type: BooleanConstructor;
-        required: boolean;
-        default: undefined;
+    readonly ariaErrormessage: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    id: {
-        type: StringConstructor;
+    readonly feedback: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-};
-export type Props = PartialBy<RequiredBy<ExtractPropTypes<typeof props>, 'size' | 'variant'>, 'resize'>;
+    readonly highlight: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly disabled: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly id: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly block: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+}, void, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    readonly 'update:modelValue': (value: unknown) => boolean;
+    readonly input: (event: Event) => boolean;
+}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly variant: {
+        readonly _preset: true;
+        readonly type: PropType<string>;
+    };
+    readonly rows: {
+        readonly type: PropType<number>;
+        readonly default: undefined;
+    };
+    readonly cols: {
+        readonly type: PropType<number>;
+        readonly default: undefined;
+    };
+    readonly resize: {
+        readonly type: PropType<"both" | "none" | "horizontal" | "vertical">;
+        readonly _preset: true;
+    };
+    readonly value: {
+        readonly type: PropType<string | number>;
+        readonly default: undefined;
+    };
+    readonly modelValue: {
+        readonly type: PropType<string | number>;
+        readonly default: undefined;
+    };
+    readonly placeholder: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly readonly: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly hint: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly autocomplete: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly label: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly autofocus: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly description: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly name: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly required: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly ariaInvalid: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly ariaRequired: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly ariaLabelledby: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly ariaDescribedby: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly ariaErrormessage: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly feedback: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly highlight: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly disabled: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly id: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly block: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+}>> & {
+    onInput?: ((event: Event) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: unknown) => any) | undefined;
+}, {
+    readonly required: boolean;
+    readonly block: boolean;
+    readonly feedback: string;
+    readonly id: string;
+    readonly name: string;
+    readonly value: string | number;
+    readonly label: string;
+    readonly autocomplete: string;
+    readonly ariaInvalid: boolean;
+    readonly ariaRequired: boolean;
+    readonly autofocus: boolean;
+    readonly disabled: boolean;
+    readonly readonly: boolean;
+    readonly description: string;
+    readonly placeholder: string;
+    readonly cols: number;
+    readonly modelValue: string | number;
+    readonly ariaLabelledby: string;
+    readonly ariaDescribedby: string;
+    readonly ariaErrormessage: string;
+    readonly highlight: boolean;
+    readonly hint: string;
+    readonly rows: number;
+}, {}>;
+export { ETextarea, configuration };

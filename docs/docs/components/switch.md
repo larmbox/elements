@@ -4,81 +4,77 @@ The switch works just like a [checkbox](/components/checkbox) but has a differen
 
 <Snippet :code="example" />
 
-## Size
-
-The switch component allows a `size` prop. Elements provides CSS rules for the small, default and large size options.
-
-<Snippet :code="sizes" class="gap-lg" />
-
 ## Variant
 
-Use the `variant` prop to change the switch theming according to your configured [themes](/configuration/themes/).
+Use the `variant` prop to change the element theming according to your configured [variants](/theme/variants).
 
-<Snippet :code="variants" class="gap-lg" />
+<Snippet :code="variants" class="wrap" />
 
 ### Highlight
 
 Set the `highlight` prop to override the default border color with the variant color.
 
-<Snippet :code="highlight" class="gap-lg" />
+<Snippet :code="highlight" class="wrap" />
 
 Highlight is automatically set to `true` if the [feedback](#feedback) prop is populated. Set highlight to `false` to override feedback highlighting.
 
-<Snippet :code="highlightFeedback" class="gap-lg" />
+<Snippet :code="highlightFeedback" class="wrap" />
+
+## Icons
+
+Set the `icon-checked` and `icon-unchecked` props to add icons to your switch.
+
+<Snippet :code="icons" class="wrap" />
 
 ## Labels
 
 Use the `label`, and `description` props to describe your switch.
 
-<Snippet :code="labels" />
+<Snippet :code="labels" class="wrap" />
 
 You can also use slots for more freedom on label content. Please see the [Slots](#slots) section for information on slot variables.
 
-<Snippet :code="labelsSlots" />
+<Snippet :code="labelsSlots" class="wrap" />
 
 ## Block
 
 By default the checkbox component is displayed as an inline element. By adding the `block` prop, the input container will span the whole container width.
 
-<Snippet :code="block" />
+<Snippet :code="block" class="wrap" />
 
 ## Disabled
 
 A disabled switch cannot be interacted with.
 
-<Snippet :code="disabled" />
+<Snippet :code="disabled" class="wrap" />
 
 ## Feedback
 
 Use the `feedback` slot to add validation or other form errors to your switch input. Elements provides variants for error and success feedback types.
 
-<Snippet :code="feedback" />
+<Snippet :code="feedback" class="wrap" />
 
 ## Component Reference
 
-<ComponentMeta src="ESwitch" />
+<ComponentReference src="ESwitch" />
 
 <script lang="ts" setup>
 const example = `<ESwitch label="Switch" />`
 
-const sizes = `
-<ESwitch size="sm" label="Small" block />
-<ESwitch size="md" label="Default" block />
-<ESwitch size="lg" label="Large" block />
+const variants = `
+<ESwitch variant="primary" label="Primary" checked />
+<ESwitch variant="secondary" label="Secondary" checked />
 `
 
-const variants = `
-<ESwitch variant="primary" label="Primary" />
-<ESwitch variant="secondary" label="Secondary" />
-<ESwitch variant="error" label="Error" />
-<ESwitch variant="success" label="Success" />
+const icons = `
+<ESwitch icon-checked="check" checked />
+<ESwitch icon-unchecked="arrow-right-short" icon-checked="arrow-left-short" />
 `
+
 
 const highlight = `
 <ESwitch highlight variant="primary" label="Primary" />
 <ESwitch highlight variant="secondary" label="Secondary" />
-<ESwitch highlight variant="error" label="Error" />
-<ESwitch highlight variant="success" label="Success" />
 `
 
 const highlightFeedback = `
@@ -99,22 +95,21 @@ const labelsSlots = `
     <label :for="id">Label</label>
   </template>
   <template #description>
-    <span style="color: purple" v-text="'Description'" />
+    <span style="color: var(--primary-color)" v-text="'Description'" />
   </template>
 </ESwitch>
 `
 
 const block = `
-<ESwitch block label="Block" margin />
+<ESwitch block label="Block" />
 <ESwitch block label="Block 2" />
 `
 
 const disabled = `
-<ESwitch disabled label="Disabled" block margin />
-<ESwitch checked disabled label="Disabled" block />`
+<ESwitch disabled label="Disabled" />
+<ESwitch checked disabled label="Disabled" />`
 
 const feedback = `
-<ESwitch label="Switch" block feedback="Error!" margin />
-<ESwitch label="Switch" block feedback="Success!" feedback-type="success" />
+<ESwitch label="Switch" block feedback="Error!" />
 `
 </script>

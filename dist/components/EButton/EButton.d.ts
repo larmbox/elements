@@ -1,101 +1,287 @@
-import { ExtractPropTypes } from 'vue';
-import { RequiredBy } from '../../common/types';
-export declare const style: {
-    'padding-x': string;
-    'padding-y': string;
-    'padding-x-sm': string;
-    'padding-y-sm': string;
-    'padding-x-lg': string;
-    'padding-y-lg': string;
-    'border-radius': string;
-    'border-width': string;
-    'font-size': string;
-    'font-size-sm': string;
-    'font-size-lg': string;
-    'line-height': string;
-    'line-height-sm': string;
-    'line-height-lg': string;
-    'font-weight': string;
+import { PropType } from 'vue';
+import { ComponentName } from '../../common/enums';
+import { ComponentConfiguration } from '../../common/types';
+import { BlockSlots } from '../../composables/useBlock';
+import { ComponentSlots } from '../../composables/useComponent';
+import { DisabledSlots } from '../../composables/useDisabled';
+import { LinkSlots } from '../../composables/useLink';
+import { VariantSlots } from '../../composables/useVariant';
+declare const configuration: {
+    readonly name: ComponentName.EButton;
+    readonly props: {
+        readonly variant: {
+            readonly _preset: true;
+            readonly type: PropType<string>;
+        };
+        readonly tag: {
+            readonly type: PropType<keyof HTMLElementTagNameMap>;
+            readonly _preset: true;
+            readonly _verbose: false;
+        };
+        readonly type: {
+            readonly type: PropType<"button" | "reset" | "submit">;
+        };
+        readonly icon: {
+            readonly type: PropType<string>;
+        };
+        readonly iconLeft: {
+            readonly type: PropType<string>;
+        };
+        readonly iconRight: {
+            readonly type: PropType<string>;
+        };
+        readonly loading: {
+            readonly type: PropType<boolean>;
+        };
+        readonly activeClass: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly exactActiveClass: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly append: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly exact: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly replace: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly to: {
+            readonly type: PropType<string | Record<string, unknown>>;
+            readonly default: undefined;
+        };
+        readonly prefetch: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly noPrefetch: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly href: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly target: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly rel: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+        readonly disabled: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly block: {
+            readonly type: PropType<boolean>;
+            readonly default: undefined;
+        };
+        readonly id: {
+            readonly type: PropType<string>;
+            readonly default: undefined;
+        };
+    };
+    readonly emits: {};
+    readonly style: {
+        readonly 'padding-x': "calc(var(--spacing) * 0.75)";
+        readonly 'padding-y': "calc(var(--spacing) * 0.25)";
+        readonly 'border-width': "var(--border-width)";
+        readonly 'border-radius': "var(--border-radius)";
+        readonly 'font-size': "var(--font-size-md)";
+        readonly 'font-weight': "var(--font-weight-normal)";
+        readonly 'line-height': "var(--line-height)";
+    };
 };
-export declare const props: {
-    tag: {
-        type: StringConstructor;
-        inherit: boolean;
+type EButton = ComponentConfiguration<typeof configuration, {
+    default: {
+        properties: Record<string, never>;
     };
-    type: {
-        type: StringConstructor;
+} & BlockSlots & ComponentSlots & DisabledSlots & LinkSlots & VariantSlots>;
+declare const EButton: import("vue").DefineComponent<{
+    readonly variant: {
+        readonly _preset: true;
+        readonly type: PropType<string>;
     };
-    icon: {
-        type: StringConstructor;
+    readonly tag: {
+        readonly type: PropType<keyof HTMLElementTagNameMap>;
+        readonly _preset: true;
+        readonly _verbose: false;
     };
-    iconLeft: {
-        type: StringConstructor;
+    readonly type: {
+        readonly type: PropType<"button" | "reset" | "submit">;
     };
-    iconRight: {
-        type: StringConstructor;
+    readonly icon: {
+        readonly type: PropType<string>;
     };
-    loading: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly iconLeft: {
+        readonly type: PropType<string>;
     };
-    outline: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly iconRight: {
+        readonly type: PropType<string>;
     };
-    variant: {
-        type: import("vue").PropType<string>;
+    readonly loading: {
+        readonly type: PropType<boolean>;
     };
-    activeClass: {
-        type: StringConstructor;
+    readonly activeClass: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    exactActiveClass: {
-        type: StringConstructor;
+    readonly exactActiveClass: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    append: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly append: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    exact: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly exact: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    replace: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly replace: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    to: {
-        type: (ObjectConstructor | StringConstructor)[];
+    readonly to: {
+        readonly type: PropType<string | Record<string, unknown>>;
+        readonly default: undefined;
     };
-    prefetch: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly prefetch: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    noPrefetch: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly noPrefetch: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    href: {
-        type: StringConstructor;
+    readonly href: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    target: {
-        type: StringConstructor;
+    readonly target: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    rel: {
-        type: StringConstructor;
+    readonly rel: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    size: {
-        type: import("vue").PropType<string>;
+    readonly disabled: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    disabled: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly block: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
     };
-    block: {
-        type: BooleanConstructor;
-        default: undefined;
+    readonly id: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
     };
-    id: {
-        type: StringConstructor;
+}, void, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly variant: {
+        readonly _preset: true;
+        readonly type: PropType<string>;
     };
-};
-export type Props = RequiredBy<ExtractPropTypes<typeof props>, 'tag' | 'size' | 'variant'>;
+    readonly tag: {
+        readonly type: PropType<keyof HTMLElementTagNameMap>;
+        readonly _preset: true;
+        readonly _verbose: false;
+    };
+    readonly type: {
+        readonly type: PropType<"button" | "reset" | "submit">;
+    };
+    readonly icon: {
+        readonly type: PropType<string>;
+    };
+    readonly iconLeft: {
+        readonly type: PropType<string>;
+    };
+    readonly iconRight: {
+        readonly type: PropType<string>;
+    };
+    readonly loading: {
+        readonly type: PropType<boolean>;
+    };
+    readonly activeClass: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly exactActiveClass: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly append: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly exact: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly replace: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly to: {
+        readonly type: PropType<string | Record<string, unknown>>;
+        readonly default: undefined;
+    };
+    readonly prefetch: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly noPrefetch: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly href: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly target: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly rel: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+    readonly disabled: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly block: {
+        readonly type: PropType<boolean>;
+        readonly default: undefined;
+    };
+    readonly id: {
+        readonly type: PropType<string>;
+        readonly default: undefined;
+    };
+}>>, {
+    readonly replace: boolean;
+    readonly exact: boolean;
+    readonly block: boolean;
+    readonly id: string;
+    readonly rel: string;
+    readonly target: string;
+    readonly append: boolean;
+    readonly disabled: boolean;
+    readonly href: string;
+    readonly to: string | Record<string, unknown>;
+    readonly activeClass: string;
+    readonly exactActiveClass: string;
+    readonly prefetch: boolean;
+    readonly noPrefetch: boolean;
+}, {}>;
+export { EButton, configuration };

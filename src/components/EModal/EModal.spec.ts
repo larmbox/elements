@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { beforeAll, expect, test } from 'vitest';
-import { createElements, EModal } from '../..';
+import { nextTick } from 'vue';
+import { EModal, createElements } from '../..';
 
 beforeAll(() => {
   createElements();
@@ -9,12 +10,12 @@ beforeAll(() => {
 test('mount component', async () => {
   expect(EModal).toBeTruthy();
 
-  const wrapper = mount(EModal, {
-    props: {
-      id: 'modal',
-    },
+  const wrapper = mount(EModal);
+
+  nextTick(() => {
+    expect(wrapper.html()).toContain('teleport');
   });
 
-  expect(wrapper.html()).toMatchSnapshot();
-  expect(wrapper.html()).toContain('modal');
+  expect(document.getElementById('ETeleportTarget')).toBeTruthy();
+  expect(document.getElementById('ETeleportTarget-outside')).toBeTruthy();
 });

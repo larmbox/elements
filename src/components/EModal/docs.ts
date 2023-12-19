@@ -1,118 +1,243 @@
-import { ComponentName } from '~/common/enums';
-import { ComponentDocs } from '~/common/types';
-import config from '~/common/utility/default-config';
-import { EModalComponent } from '.';
+import { config } from '~/common/config';
+import { component, size } from '~/common/docs';
+import { Documentation } from '~/common/types';
+import { EModal, configuration } from './EModal';
 
-const def = config.components.EModal.props;
+const defaults = config.components.EModal.props;
 
-const commonSlotProperties = [
-  {
-    name: 'close',
-    type: 'Function',
-    description: 'Function to close the modal.',
-  },
-  {
-    name: 'data',
-    type: 'any',
-    description: 'The data passed to the modal.',
-  },
-];
-
-const docs: ComponentDocs<EModalComponent> = {
-  name: ComponentName.EModal,
-  description:
-    'A modal is a dialog box/popup window that is displayed on top of the current page.',
-  props: [
-    {
-      name: 'id',
-      type: 'string',
-      description: 'ID attribute to set on the root element.',
-    },
-    {
-      name: 'size',
-      type: 'string',
-      default: def.size,
+export const documentation: Documentation<EModal> = {
+  props: {
+    ...component.props,
+    size: {
+      ...size.props.size,
+      default: defaults.size,
       description:
         'Sets the modal size. Included sizes are `sm`, `md` or `lg`.',
     },
-    {
-      name: 'title',
-      type: 'string',
-      default: def.title,
+    title: {
+      type: ['string'],
       description: 'Modal title. Shown in modal header.',
     },
-    {
-      name: 'description',
-      type: 'string',
-      default: def.description,
+    description: {
+      type: ['string'],
       description: 'Modal description. Shown in modal header.',
     },
-    {
-      name: 'closeable',
-      type: 'boolean',
-      default: def.closeable,
+    transitionDuration: {
+      type: ['number'],
+      default: defaults.transitionDuration,
       description:
-        'If `true`, the modal header will include a close button. Additionally, if `true`, the modal can be closed using the Escape key.',
+        'The transition duration of the modal opening and closing, in milliseconds. For best results, this should match the `transition-time` CSS variable.',
     },
-    {
-      name: 'closeOnBackdrop',
-      type: 'boolean',
-      default: def.closeOnBackdrop,
+    rejectCloseClass: {
+      type: ['string', 'null'],
       description:
-        'If `true`, the modal will close when the user clicks outside the modal.',
+        'The class to apply to the modal when it refuses to close. Set to `null` to disable.',
     },
-    {
-      name: 'closeOnRouteChange',
-      type: 'boolean',
-      default: def.closeOnRouteChange,
+    ariaDescribedby: {
+      type: ['string'],
       description:
-        'If `true`, the modal will close when the user navigates to another page.',
+        'The class to apply to the modal when it refuses to close. Set to `null` to disable.',
     },
-  ],
-  slots: [
-    {
-      name: 'default',
+    ariaLabelledby: {
+      type: ['string'],
+      description:
+        'The class to apply to the modal when it refuses to close. Set to `null` to disable.',
+    },
+    closeButton: {
+      type: ['false', '[CloseButton](#close-button)'],
+      default: defaults.closeButton,
+      description:
+        'Properties of the close button. Set to `false` to disable. If the modal has no title or description, the close button will not be shown.',
+      nested: {
+        id: 'close-button',
+        name: 'CloseButton',
+        description: '',
+        props: {
+          title: {
+            type: ['string'],
+            description: 'The `title` attribute for the close button.',
+          },
+          ariaLabel: {
+            type: ['string'],
+            description: 'The `aria-label` attribute for the close button.',
+          },
+          icon: {
+            type: ['string'],
+            required: true,
+            description:
+              'The icon to use for the close button. Uses the [Icon](/components/icon) component.',
+          },
+        },
+      },
+    },
+    closeable: {
+      type: ['boolean', 'Array<[Closeable](#closeable)>'],
+      default: defaults.closeable,
+      nested: {
+        id: 'closeable',
+        name: 'Closeable',
+        description: '',
+        literal: 'string',
+        props: {
+          outside: {
+            description:
+              'The modal can be closed by clicking outside the modal.',
+          },
+          route: {
+            description: 'The modal is closed when the route changes.',
+          },
+          escape: {
+            description: 'The modal can be closed by pressing escape.',
+          },
+        },
+      },
+      description:
+        'If `false`, the modal can only be closed by calling the `modal.close()` function. If `true`, the modal can be closed using all [Closeable](#closeable) methods. Can also be an array of [Closeable](#closeable) options.',
+    },
+  },
+  slots: {
+    default: {
       description: 'Alias for slot `body`.',
-      properties: commonSlotProperties,
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'description',
-      description: 'Header description content.',
-      properties: commonSlotProperties.filter(({ name }) => name !== 'close'),
-    },
-    {
-      name: 'title',
+    title: {
       description: 'Header title content.',
-      properties: commonSlotProperties.filter(({ name }) => name !== 'close'),
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'body',
-      description: 'The body content.',
-      properties: commonSlotProperties,
+    description: {
+      description: 'Header description content.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'body-raw',
+    'header-extension': {
       description:
-        'The body content, but does not include the default modal body padding.',
-      properties: commonSlotProperties,
+        'Extension to the header. Placed below the header content. Not part of the modal body overflow.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'footer',
-      description: 'Alias for slot `footer-right`.',
-      properties: commonSlotProperties,
+    body: {
+      description: 'Alias for slot `body`.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'footer-left',
-      description: 'Footer content, aligned to the left.',
-      properties: commonSlotProperties,
+    'body-raw': {
+      description: 'Alias for slot `body`.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-    {
-      name: 'footer-right',
-      description: 'Footer content, aligned to the right.',
-      properties: commonSlotProperties,
+    footer: {
+      description: 'Alias for slot `body`.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
     },
-  ],
-  events: [],
+    'footer-left': {
+      description: 'Alias for slot `body`.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
+    },
+    'footer-right': {
+      description: 'Alias for slot `body`.',
+      properties: {
+        data: {
+          type: ['any'],
+          description: 'The data passed to the modal.',
+        },
+        close: {
+          type: ['function'],
+          description: 'The function to close the modal.',
+        },
+      },
+    },
+  },
+  emits: {
+    close: {
+      description:
+        'Emitted when the modal is closed and removed from the modal stack.',
+      properties: {},
+    },
+    'reject-close': {
+      description:
+        'Emitted when the user attempts to close the modal, but the modal refuses to close.',
+      properties: {},
+    },
+    open: {
+      description: 'Emitted when the modal is added to the stack.',
+      properties: {},
+    },
+    hide: {
+      description: 'Emitted when the modal is closed but remains in the stack.',
+      properties: {},
+    },
+    show: {
+      description: 'Emitted when the modal is opened.',
+      properties: {},
+    },
+  },
+  style: configuration.style,
 };
-
-export default docs;

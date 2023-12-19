@@ -1,3 +1,0 @@
-@function color($variant, $key) {
-  @return v(#{$variant}-#{$key});
-}

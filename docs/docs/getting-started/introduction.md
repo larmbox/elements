@@ -22,9 +22,11 @@ Please refer to the [Larmbox Open Source Community Guidelines](https://github.co
 
 ### Development
 
-Clone the repository, then run:
-
 ```bash
+git clone https://github.com/larmbox/elements
+
+cd elements
+
 # Install dependencies
 npm install
 
@@ -32,10 +34,26 @@ npm install
 npm run test
 npm run test:watch
 
-# Run Vuepress
-npm run start:dev
-
 # Lint
 npm run lint
 npm run lint:fix
 ```
+
+#### Documentation
+
+To run the documentation pages locally:
+
+```bash
+cd docs
+
+# Install dependencies
+npm install
+
+# Run Vitepress
+npm run start:dev
+```
+
+## License
+
+Elements is licensed under the [MIT
+License](https://github.com/larmbox/elements/blob/HEAD/LICENSE).

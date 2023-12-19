@@ -1,168 +1,93 @@
-@use 'sass:math';
 @import '../../theme/imports';
 
-@mixin input-highlight($color) {
-  input {
-    border-color: color($color, 8);
-    &:disabled {
-      border-color: color($color, 3);
+$form: c('EFormInput');
+$component: c('EInput');
+
+@mixin variants {
+  @each $variant in $variants {
+    &.#{$component}--#{$variant} {
+      &.#{$form}--highlight .#{$component}-target {
+        border-color: variant($variant, border-color);
+      }
+
+      .#{$component}-target {
+        &:focus {
+          border-color: variant($variant, border-color, focus);
+          box-shadow: 0
+            0
+            0
+            v(focus-shadow-size)
+            variant($variant, box-shadow-color);
+        }
+
+        &:disabled {
+          border-color: v(border-color--disabled, $component);
+          color: v(text-color--disabled, $component);
+        }
+      }
     }
   }
 }
 
-@mixin input-color($color) {
-  &.#{c('EInput') + m('highlight')} {
-    @include input-highlight($color);
-  }
-
-  input {
-    &:focus {
-      border-color: color($color, 6);
-    }
-
-    &:not(:disabled):active {
-      border-color: color($color, 8);
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
-    }
-
-    &:disabled {
-      border-color: v(border-color--disabled, c('EInput'));
-      color: v(text-color--disabled, c('EInput'));
-    }
-  }
-}
-
-.#{c('EInput')} {
+.#{$component} {
   display: inline-flex;
   flex-direction: column;
 
-  &.#{c('EInput') + m('block')} {
+  @include variants;
+
+  line-height: v(line-height, $component);
+
+  &.#{$component}--block {
+    display: flex;
     width: 100%;
+  }
+
+  .#{$component}-inner {
     display: flex;
   }
 
-  .#{c('EInput') + e('inner')} {
-    display: flex;
-
-    .#{c('EInput') + e('element')} {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-  }
-
-  input {
+  .#{$component}-target {
     position: relative;
     width: 100%;
-    display: inline-flex;
+    display: flex;
     flex: 1;
+
+    padding: v(padding-y, $component) v(padding-x, $component);
+
+    background-color: v(background-color, $component);
+    border: v(border-width, $component) solid v(border-color, $component);
+    border-radius: v(border-radius, $component);
+
+    color: v(text-color, $component);
+    font: inherit;
+    font-size: v(font-size, $component);
     outline: none;
-    background-color: v(background-color, c('EInput'));
+    appearance: none;
+
     transition: border-color v(transition-time) v(transition-type),
       box-shadow v(transition-time) v(transition-type);
-    padding: v(padding-y, c('EInput')) v(padding-x, c('EInput'));
-    border-style: solid;
-    border-width: v(border-width, c('EInput'));
-    line-height: v(line-height, c('EInput'));
-    border-radius: v(border-radius, c('EInput'));
-    border-color: v(border-color, c('EInput'));
-    color: v(text-color, c('EInput'));
-    font: inherit;
-    font-size: v(font-size, c('EInput'));
 
     &::placeholder {
-      color: v(placeholder-color, c('EInput'));
-    }
-
-    &:focus {
-      background-color: v(background-color--focus, c('EInput'));
-      &::placeholder {
-        color: v(placeholder-color--focus, c('EInput'));
-      }
+      color: v(placeholder-color, $component);
     }
 
     &:disabled {
-      color: v(text-color--disabled, c('EInput'));
-      background-color: v(background-color--disabled, c('EInput'));
-      border-color: v(border-color--disabled, c('EInput'));
-      &::placeholder {
-        color: v(placeholder-color--disabled, c('EInput'));
-      }
-    }
+      background-color: v(background-color--disabled, $component);
+      border-color: v(border-color--disabled, $component);
+      color: v(text-color--disabled, $component);
 
-    &:focus {
-      z-index: 3;
+      &::placeholder {
+        color: v(placeholder-color--disabled, $component);
+      }
     }
 
     &[type='color'],
     &[type='range'] {
       margin: 0;
       height: calc(
-        v(font-size, c('EInput')) * v(line-height, c('EInput')) +
-          v(font-size, c('EInput'))
+        v(font-size, $component) * v(line-height, $component) +
+          v(font-size, $component)
       );
-    }
-  }
-
-  @mixin input-variant($variant) {
-    &.#{c('EInput') + m($variant)} {
-      @include input-color($variant);
-    }
-  }
-
-  @each $variant in $e-palettes {
-    @include input-variant($variant);
-  }
-
-  &.#{c('EInput') + m('feedback-error')} {
-    @include input-color('error');
-
-    &.#{c('EInput') + m('highlight')} {
-      @include input-highlight('error');
-    }
-  }
-
-  &.#{c('EInput') + m('feedback-success')} {
-    @include input-color('success');
-
-    &.#{c('EInput') + m('highlight')} {
-      @include input-highlight('success');
-    }
-  }
-
-  &.#{c('EInput') + m('sm')} {
-    font-size: v(font-size-sm, c('EInput'));
-
-    input {
-      padding: v(padding-y-sm, c('EInput')) v(padding-x-sm, c('EInput'));
-      line-height: v(line-height-sm, c('EInput'));
-
-      &[type='color'] {
-        height: calc(
-          v(font-size-sm, c('EInput')) * v(line-height-sm, c('EInput')) +
-            v(font-size-sm, c('EInput'))
-        );
-      }
-    }
-  }
-
-  &.#{c('EInput') + m('lg')} {
-    font-size: v(font-size-lg, c('EInput'));
-
-    input {
-      padding: v(padding-y-lg, c('EInput')) v(padding-x-lg, c('EInput'));
-      line-height: v(line-height-lg, c('EInput'));
-
-      &[type='color'] {
-        height: calc(
-          v(font-size-lg, c('EInput')) * v(line-height-lg, c('EInput')) +
-            v(font-size-lg, c('EInput'))
-        );
-      }
     }
   }
 }

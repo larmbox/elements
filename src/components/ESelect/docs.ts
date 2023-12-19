@@ -1,47 +1,82 @@
-import * as input from '~/common/components/EInputField/docs';
-import { ComponentDocs } from '~/common/types';
-import { InputFieldProps } from '~/composables/component/use-input';
-import { ESelectComponent } from '.';
+import { config } from '~/common/config';
+import {
+  block,
+  component,
+  disabled,
+  inputField as input,
+  variant,
+} from '~/common/docs';
+import { Documentation } from '~/common/types';
+import { ESelect, configuration } from './ESelect';
 
-const meta: ComponentDocs<ESelectComponent> = {
-  name: 'ESelect',
-  description:
-    'The button component represents a clickable button, used to submit forms or anywhere in a document for accessible, standard button functionality.',
-  props: [
-    ...input.props.filter(
-      ({ name }) =>
-        !(<(keyof InputFieldProps)[]>[
-          'autocomplete',
-          'placeholder', // Custom definition of placeholder for Select component. See below.
-          'readonly',
-        ]).includes(name)
-    ),
-    {
-      name: 'placeholder',
-      type: 'string',
+const defaults = config.components.ESelect.props;
+
+export const documentation: Documentation<ESelect> = {
+  props: {
+    ...block.props,
+    ...component.props,
+    ...disabled.props,
+    ...input.props,
+    ...variant.props,
+    variant: {
+      ...variant.props.variant,
+      default: defaults.variant,
+    },
+    options: {
+      type: ['Array<[Option](#option)>'],
+      default: defaults.options,
       description:
-        'If a placeholder is set, the first option element will be a disabled element with the placeholder text content. Unlike the Input component, placeholder is not inherited from the label.',
-    },
-    {
-      name: 'options',
-      type: 'Array<{ label: string, value: any }>',
-      description: 'The available options.',
-    },
-  ],
-  slots: [...input.slots],
-  events: [
-    ...input.events,
-    {
-      name: 'input',
-      arguments: [
-        {
-          name: 'event',
-          type: 'Event',
+        'The available options. Options are rendered as `<option>` elements.',
+      nested: {
+        id: 'option',
+        name: 'Option',
+        description: 'The available options.',
+        props: {
+          label: {
+            type: ['string'],
+            description:
+              'The label of the option. If not set, value will be used instead.',
+          },
+          value: {
+            type: ['string', 'number', 'boolean', 'null'],
+            required: true,
+            description:
+              'The value of the option. Adds the value attribute to the option element. The emitted value always matches the type of the value prop, but the attribute set on the option element will always be a string. If the value is `null`, the value attribute is set to an empty string.',
+          },
+          disabled: {
+            type: ['boolean'],
+            description: 'Disables the option, making it unselectable.',
+          },
         },
-      ],
-      description: `Emitted when the value of the select element has been changed.`,
+      },
     },
-  ],
+    icon: {
+      type: ['string'],
+      default: defaults.icon,
+      description: 'The icon to display in the select.',
+    },
+    value: {
+      type: ['string'],
+      description: 'The value of the input element.',
+    },
+    modelValue: {
+      type: ['string', 'number', 'boolean', 'null'],
+      description: 'The value of the input element.',
+    },
+  },
+  slots: {
+    ...block.slots,
+    ...component.slots,
+    ...disabled.slots,
+    ...variant.slots,
+    ...input.slots,
+  },
+  emits: {
+    ...block.emits,
+    ...component.emits,
+    ...disabled.emits,
+    ...variant.emits,
+    ...input.emits,
+  },
+  style: configuration.style,
 };
-
-export default meta;

@@ -1,10 +1,12 @@
 import { App, Component, Directive } from 'vue';
-import { ComponentName } from './common/enums';
 import { Components, DeepPartial } from './common/types';
-import { EThemeProvider } from './components';
-import { _useElements } from './composables/use-elements/use-elements';
-import { CloseModalDirective, OpenModalDirective } from './directives/modal';
-import { TooltipDirective } from './directives/tooltip';
+import { _useElements } from './composables/useElements';
+import {
+  EVModalClose,
+  EVModalCloseAll,
+  EVModalOpen,
+} from './directives/EVModal/EVModal';
+import { EVTooltip } from './directives/EVTooltip/EVTooltip';
 import version from './version';
 
 export interface Instance {
@@ -14,14 +16,22 @@ export interface Instance {
 
 export interface Config {
   /**
-   *
+   * The default theme of Elements.
    */
   theme: string;
+  /**
+   * The global prefix of Elements. This applies to all components, CSS
+   * variables and classes.
+   */
   prefix: string;
+  /**
+   * Configuration of components.
+   */
   components: Components;
 }
 
 export interface UserConfig extends Omit<Config, 'components'> {
+  // User configuration allows overriding component configuration.
   components: Components<true>;
 }
 
@@ -33,47 +43,70 @@ export interface CreateOptions {
   config?: DeepPartial<UserConfig>;
 }
 
+/**
+ * Create a new instance of Elements.
+ *
+ * @param options User configuration.
+ */
 function createElements(options: CreateOptions = {}): Instance {
   const components = options.components || [];
-  const installTargets: App[] = [];
+  const targets: App[] = [];
 
   _useElements(options, true);
 
+  /**
+   * Register a component if it has not been registered yet.
+   *
+   * @param app Vue instance.
+   * @param name Component name.
+   * @param component Component definition.
+   */
   function registerComponent(
     app: App,
     name: string,
-    component: Component
+    component: Component,
   ): void {
-    const registered = app.component(name);
-    if (!registered) {
-      app.component(name, component);
-    }
+    if (!app.component(name)) app.component(name, component);
   }
 
+  /**
+   * Register a directive if it has not been registered yet.
+   *
+   * @param app Vue instance.
+   * @param dir Directive definition.
+   */
   function registerDirective(
     app: App,
-    dir: { name: string; directive: Directive }
+    name: string,
+    directive: Directive,
   ): void {
-    const registered = app.component(dir.name);
-    if (!registered) {
-      app.directive(dir.name, dir.directive);
-    }
+    if (!app.directive(name)) app.directive(name, directive);
   }
 
+  /**
+   * Install Elements into Vue.
+   * @see https://v3.vuejs.org/guide/plugins.html#installing-plugins-in-a-plugin
+   *
+   * @param app Vue instance.
+   */
   function install(app: App): void {
-    if (installTargets.includes(app)) return;
-    installTargets.push(app);
+    if (targets.includes(app)) return; // Prevent multiple installs.
+    targets.push(app);
 
-    registerComponent(app, ComponentName.EThemeProvider, EThemeProvider);
-    registerDirective(app, TooltipDirective());
-    registerDirective(app, OpenModalDirective());
-    registerDirective(app, CloseModalDirective());
+    // Register directives. All directives are always registered.
+    // TODO: Allow enabling only a subset of directives.
+    registerDirective(app, 'tooltip', EVTooltip);
+    registerDirective(app, 'modal-close', EVModalClose);
+    registerDirective(app, 'modal-close-all', EVModalCloseAll);
+    registerDirective(app, 'modal-open', EVModalOpen);
 
+    // Register the components that are enabled in the user configuration.
     components.forEach((component) => {
-      const { name } = component;
+      const { name } = component; // Extract the component name.
       registerComponent(app, name, component);
     });
   }
+
   return {
     version,
     install,

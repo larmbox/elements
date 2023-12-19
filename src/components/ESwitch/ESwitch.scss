@@ -1,58 +1,49 @@
 @use 'sass:math';
 @import '../../theme/imports';
 
-@mixin switch-highlight($color) {
-  .#{c('ESwitch') + e('box')} {
-    border-color: color($color, 8);
-  }
-  input:disabled .#{c('ESwitch') + e('box')} {
-    border-color: color($color, 3);
-  }
-}
+$form: c('EFormInput');
+$component: c('ESwitch');
 
-@mixin switch-size($suffix, $size) {
-  &.#{c('ESwitch') + m($suffix)} {
-    .#{c('ESwitch') + e('inner')} .#{c('ESwitch') + e('context')} {
-      margin-left: calc($size * 2 + v(spacing-xs));
-    }
-
-    .#{c('ESwitch') + e('box')} {
-      width: calc($size * 2);
-      height: $size;
-      font-size: $size;
-      padding: 2px;
-
-      .#{c('ESwitch') + e('inner-box')} {
-        width: calc($size - v(border-width, c('ESwitch')) * 2 - 2px);
-        height: calc($size - v(border-width, c('ESwitch')) * 2 - 2px);
-        font-size: calc($size - 4px);
-      }
-    }
-
-    input {
-      width: calc($size * 2);
-      height: $size;
-
-      &:checked {
-        + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
-          left: 100%;
-          transform: translateX(-100%);
+@mixin variants {
+  @each $variant in $variants {
+    &.#{$component}--#{$variant} {
+      &.#{$form}--highlight {
+        input + .#{$component}-target {
+          border-color: variant($variant, border-color);
         }
       }
 
-      &:active:not(:disabled) {
-        + .#{c('ESwitch') + e('box')} {
-          .#{c('ESwitch') + e('inner-box')} {
-            width: calc($size * 1.25 - v(border-width, c('ESwitch')) * 2);
+      .#{$component}-target .#{$component}-inner-target {
+        color: variant($variant, contrast-color);
+      }
+
+      input {
+        &:checked + .#{$component}-target {
+          background-color: variant($variant, background-color);
+          border-color: variant($variant, border-color);
+
+          .#{$component}-inner-target {
+            background-color: variant($variant, contrast-color);
+            color: variant($variant, color);
           }
         }
-        &:checked {
-          + .#{c('ESwitch') + e('box')} {
-            position: relative;
-            .#{c('ESwitch') + e('inner-box')} {
-              left: 100%;
-              transform: translateX(-100%);
-            }
+
+        &:focus + .#{$component}-target {
+          border-color: variant($variant, border-color, focus);
+          box-shadow: 0
+            0
+            0
+            v(focus-shadow-size)
+            variant($variant, box-shadow-color);
+        }
+
+        &:disabled:checked + .#{$component}-target {
+          background-color: variant($variant, background-color, disabled);
+          border-color: variant($variant, border-color, disabled);
+
+          .#{$component}-inner-target {
+            background-color: variant($variant, contrast-color--disabled);
+            color: variant($variant, color--disabled);
           }
         }
       }
@@ -60,168 +51,163 @@
   }
 }
 
-@mixin switch-color($color) {
-  &.#{c('ESwitch') + m('highlight')} {
-    @include switch-highlight($color);
-  }
-
-  input {
-    + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
-      // background-color: color($color, 8);
-      background-color: v(text-color);
-      color: v(border-color);
-    }
-    &:checked {
-      + .#{c('ESwitch') + e('box')} {
-        background-color: color($color, 8);
-        border-color: color($color, 9);
-
-        .#{c('ESwitch') + e('inner-box')} {
-          background-color: v(contrast-color);
-          border-color: color($color, 9);
-          color: color($color, 8);
-        }
-      }
-    }
-
-    &:focus {
-      + .#{c('ESwitch') + e('box')} {
-        border-color: color($color, 8);
-        box-shadow: 0 0 0 v(focus-shadow-size, c('ESwitch'))
-          color($color, 'T20');
-      }
-    }
-
-    &:disabled:checked {
-      + .#{c('ESwitch') + e('box')} {
-        border-color: color($color, 5);
-        background-color: color($color, 4);
-        .#{c('ESwitch') + e('inner-box')} {
-          border-color: color($color, 10);
-          color: color($color, 4);
-        }
-      }
-    }
-
-    &:disabled:not(:checked) {
-      + .#{c('ESwitch') + e('box')} {
-        background-color: v(background-color--disabled);
-        .#{c('ESwitch') + e('inner-box')} {
-          background-color: color($color, 4);
-        }
-      }
-    }
-  }
-}
-
-.#{c('ESwitch')} {
+.#{$component} {
   display: inline-flex;
   position: relative;
   align-items: center;
 
   // https://stackoverflow.com/questions/48117071/element-with-display-inline-flex-has-a-strange-top-margin
   vertical-align: middle;
+  line-height: v(line-height, $component);
 
-  &.#{c('ESwitch') + m('block')} {
-    width: 100%;
+  @include variants;
+
+  &.#{$component}--block {
     display: flex;
+    width: 100%;
   }
 
-  .#{c('ESwitch') + e('box')} {
-    flex-shrink: 0;
+  .#{$component}-target {
     display: flex;
     align-items: center;
-    border: v(border-width, c('ESwitch')) solid v(border-color, c('ESwitch'));
-    background-color: v(background-color, c('ESwitch'));
-    border-radius: v(border-radius, c('ESwitch'));
-    box-shadow: 0 0 0 v(focus-shadow-size) transparent;
-    transition: border-color v(transition-time) v(transition-type),
+    flex-shrink: 0;
+
+    width: calc(v(size, $component) * 2);
+    height: v(size, $component);
+    font-size: v(size, $component);
+
+    padding: 1px;
+
+    background-color: v(background-color, $component);
+    border: v(border-width, $component) solid v(border-color, $component);
+    border-radius: v(border-radius, $component);
+
+    transition:
+      border-color v(transition-time) v(transition-type),
       background-color v(transition-time) v(transition-type),
       box-shadow v(transition-time) v(transition-type);
 
-    .#{c('ESwitch') + e('inner-box')} {
-      left: 0;
+    .#{$component}-inner-target {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
+      left: 0;
+
+      width: calc(v(size, $component) - v(border-width, $component) * 2 - 2px);
+      height: calc(v(size, $component) - v(border-width, $component) * 2 - 2px);
+
+      background-color: v(toggle-background-color, $component);
+      border-radius: calc(v(border-radius, $component) - v(border-width));
+
+      font-size: calc(v(size, $component) - 0.5rem);
       pointer-events: none;
-      transition: left v(transition-time) v(transition-type),
+
+      transition:
+        left v(transition-time) v(transition-type),
         transform v(transition-time) v(transition-type),
         background-color v(transition-time) v(transition-type),
         color v(transition-time) v(transition-type),
         width v(transition-time) v(transition-type),
         height v(transition-time) v(transition-type);
-      border-radius: v(border-radius, c('ESwitch'));
-      background-color: v(border-color);
 
-      .#{c('ESwitch') + e('icon')} {
+      .#{$component}-icon {
         position: absolute;
-        &:first-of-type {
+        transition: opacity v(transition-time) v(transition-type);
+
+        &.#{$component}-icon--checked {
           opacity: 0;
         }
       }
     }
   }
 
-  .#{c('ESwitch') + e('inner')} {
+  .#{$component}-inner {
     > div:first-of-type {
       display: flex;
-      align-items: center;
 
-      .#{c('EFormControl') + e('label')} {
+      .#{c('EFormLabel')} {
         display: block;
-        margin-bottom: 0;
+        padding-bottom: 0;
         padding-left: v(spacing-xs);
+
+        // Aligns the first line of the label with the switch target.
+        margin-top: calc(
+          (v(line-height, $component) * 1em - v(size, $component)) / 2 * -1
+        );
       }
+    }
+
+    .#{$component}-context {
+      margin-left: calc(v(size, $component) * 2 + v(spacing-xs));
     }
   }
 
   input {
     position: absolute;
+    width: calc(v(size, $component) * 2);
+    height: v(size, $component);
     margin: 0;
     opacity: 0;
     z-index: 1;
 
     &:checked {
-      + .#{c('ESwitch') + e('box')} .#{c('ESwitch') + e('inner-box')} {
-        .#{c('ESwitch') + e('icon')}:first-of-type {
-          opacity: 1;
-        }
-        .#{c('ESwitch') + e('icon')}:last-of-type {
+      + .#{$component}-target .#{$component}-inner-target {
+        left: calc(
+          100% - (v(size, $component) - v(border-width, $component) * 2 - 2px)
+        );
+
+        .#{$component}-icon--unchecked {
           opacity: 0;
+        }
+
+        .#{$component}-icon--checked {
+          opacity: 1;
         }
       }
     }
-  }
 
-  @mixin switch-variant($variant) {
-    &.#{c('ESwitch') + m($variant)} {
-      @include switch-color($variant);
+    &:active:not(:disabled) {
+      + .#{$component}-target .#{$component}-inner-target {
+        width: calc(
+          v(size, $component) * 1.25 - v(border-width, $component) * 2
+        );
+      }
+
+      &:checked + .#{$component}-target .#{$component}-inner-target {
+        left: calc(
+          100% - (v(size, $component) * 1.25 - v(border-width, $component) * 2)
+        );
+      }
+    }
+
+    &:disabled:not(:checked) + .#{$component}-target {
+      background-color: v(background-color--disabled, $component);
+      border-color: v(border-color--disabled, $component);
     }
   }
 
-  @each $variant in $e-palettes {
-    @include switch-variant($variant);
-  }
+  &.#{$form}--highlight.#{$form}--feedback {
+    input {
+      &:not(:checked) + .#{$component}-target {
+        border-color: variant(feedback, border-color);
+      }
 
-  &.#{c('ESwitch') + m('feedback-error')} {
-    @include switch-color('error');
+      &:not(:checked):not(:disabled):not(:focus):hover + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
 
-    &.#{c('ESwitch') + m('highlight')} {
-      @include switch-highlight('error');
+      &:not(:checked):not(:disabled):active + .#{$component}-target {
+        border-color: variant(feedback, border-color, active);
+      }
+
+      &:not(:checked):focus + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
+
+      &:not(:checked):disabled + .#{$component}-target {
+        border-color: variant(feedback, border-color, disabled);
+      }
     }
   }
-
-  &.#{c('ESwitch') + m('feedback-success')} {
-    @include switch-color('success');
-
-    &.#{c('ESwitch') + m('highlight')} {
-      @include switch-highlight('success');
-    }
-  }
-
-  @include switch-size('md', v(size, c('ESwitch')));
-  @include switch-size('sm', v(size-sm, c('ESwitch')));
-  @include switch-size('lg', v(size-lg, c('ESwitch')));
 }

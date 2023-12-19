@@ -4,27 +4,21 @@ The select component represents an input control that provides a menu of options
 
 <Snippet :code="example" />
 
-## Size
-
-The select component allows a `size` prop. Elements provides CSS rules for the small, default and large size options.
-
-<Snippet :code="sizes" class="grid-3" />
-
 ## Variant
 
-Use the `variant` prop to change the input theming according to your configured [themes](/configuration/themes/).
+Use the `variant` prop to change the element theming according to your configured [variants](/theme/variants).
 
-<Snippet :code="variants" class="grid-4" />
+<Snippet :code="variants" class="wrap" />
 
 ### Highlight
 
 Set the `highlight` prop to override the default border color with the variant color.
 
-<Snippet :code="highlight" class="grid-4" />
+<Snippet :code="highlight" class="wrap" />
 
 Highlight is automatically set to `true` if the [feedback](#feedback) prop is populated. Set highlight to `false` to override feedback highlighting.
 
-<Snippet :code="highlightFeedback" class="gap" />
+<Snippet :code="highlightFeedback" class="wrap" />
 
 ## Labels
 
@@ -46,30 +40,36 @@ By default the select component is displayed as an inline element. By adding the
 
 A disabled select field cannot be interacted with.
 
-<Snippet :code="disabled" class="gap" />
+<Snippet :code="disabled" class="wrap" />
+
+## Disabled Option
+
+A disabled option cannot be selected.
+
+<Snippet :code="disabledOption" />
 
 ## Feedback
 
-Use the `feedback` slot to add validation or other form errors to your select field. Elements provides variants for error and success feedback types.
+Use the `feedback` prop to add validation or other form errors to your select
+field. The `feedback` prop controls the `invalid` attribute on the select element.
 
 <Snippet :code="feedback" />
 
 ## Component Reference
 
-<ComponentMeta src="ESelect" />
+<ComponentReference src="ESelect" />
 
 <script lang="ts" setup>
 const example = `<template>
   <ESelect
     v-model="selected"
     label="Select"
-    placeholder="A"
     :options="[
       { label: 'Apple', value: 'apple' },
       { label: 'Banana', value: 'banana' },
       { label: 'Cranberry', value: 'cranberry' }
     ]"
-    :hint="selected ? \`You selected \${selected}.\` : \`Please select something.\`"
+    :hint="\`You selected \${selected}.\`"
   />
 </template>
 
@@ -77,28 +77,7 @@ const example = `<template>
 export default {
   data() {
     return {
-      selected: null
-    }
-  }
-}
-<\/script>
-`
-
-const sizes = `<template>
-  <ESelect size="sm" :options="options" label="Small" />
-  <ESelect size="md" :options="options" label="Default" />
-  <ESelect size="lg" :options="options" label="Large" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      options: [
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' },
-        { label: 'Cranberry', value: 'cranberry' }
-      ]
+      selected: 'apple'
     }
   }
 }
@@ -106,22 +85,75 @@ export default {
 `
 
 const variants = `
-<ESelect variant="primary" placeholder="Primary" />
-<ESelect variant="secondary" placeholder="Secondary" />
-<ESelect variant="error" placeholder="Error" />
-<ESelect variant="success" placeholder="Success"/>
+<template>
+  <ESelect
+    variant="primary" 
+    label="Primary"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+  <ESelect
+    variant="secondary" 
+    label="Secondary"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+</template>
 `
 
 const highlight = `
-<ESelect highlight variant="primary" placeholder="Primary" />
-<ESelect highlight variant="secondary" placeholder="Secondary" />
-<ESelect highlight variant="error" placeholder="Error" />
-<ESelect highlight variant="success" placeholder="Success"/>
+<template>
+  <ESelect
+    highlight
+    variant="primary" 
+    label="Primary"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+  <ESelect
+    highlight
+    variant="secondary" 
+    label="Secondary"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+</template>
 `
 
 const highlightFeedback = `
-<ESelect feedback="Error!" placeholder="Feedback" />
-<ESelect :highlight="false" feedback="Error!" placeholder="Override" />
+<template>
+  <ESelect
+    feedback="Check this field!"
+    label="Feedback"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+  <ESelect
+    :highlight="false"
+    feedback="Check this field!"
+    label="Override"
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+  />
+</template>
 `
 
 const labels = `
@@ -138,22 +170,24 @@ const labels = `
 `
 
 const labelsSlots = `
-<ESelect 
-  :options="[
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' },
-    { label: 'Cranberry', value: 'cranberry' }
-  ]">
-  <template #label="{ id }">
-    <label :for="id">Label</label>
-  </template>
-  <template #description>
-    <span style="color: purple" v-text="'Description'" />
-  </template>
-  <template #hint>
-    <span style="color: purple" v-text="'Hint'" />
-  </template>
-</ESelect>
+<template>
+  <ESelect 
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]">
+    <template #label="{ id }">
+      <label :for="id">Label</label>
+    </template>
+    <template #description>
+      <span style="color: var(--primary-color)" v-text="'Description'" />
+    </template>
+    <template #hint>
+      <span style="color: var(--primary-color)" v-text="'Hint'" />
+    </template>
+  </ESelect>
+</template>
 `
 
 const block = `
@@ -170,15 +204,23 @@ const block = `
 
 const disabled = `
 <template>
-<ESelect 
-  v-model="selected" 
-  :options="[
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' },
-    { label: 'Cranberry', value: 'cranberry' }
-  ]"
-  disabled
-/>
+  <ESelect 
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+    disabled
+  />
+  <ESelect 
+    v-model="selected" 
+    :options="[
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cranberry', value: 'cranberry' }
+    ]"
+    disabled
+  />
 </template>
 
 <script>
@@ -192,8 +234,25 @@ export default {
 <\/script>
 `
 
+const disabledOption = `
+<ESelect 
+  :options="[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana', disabled: true },
+    { label: 'Cranberry', value: 'cranberry' }
+  ]"
+/>
+`
+
 const feedback = `
-<ESelect label="Select" block feedback="Error!" />
-<ESelect label="Select" block feedback="Success!" feedback-type="success" />
+<ESelect
+  feedback="Check this field!"
+  label="Feedback"
+  :options="[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Cranberry', value: 'cranberry' }
+  ]"
+/>
 `
 </script>

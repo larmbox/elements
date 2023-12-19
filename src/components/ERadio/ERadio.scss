@@ -1,157 +1,149 @@
 @use 'sass:math';
 @import '../../theme/imports';
 
-@mixin radio-size($suffix, $size) {
-  &.#{c('ERadio') + m($suffix)} {
-    .#{c('ERadio') + e('inner')} .#{c('ERadio') + e('context')} {
-      margin-left: calc($size + v(spacing-xs));
-    }
+$form: c('EFormInput');
+$component: c('ERadio');
 
-    .#{c('ERadio') + e('box')} {
-      padding: calc($size * 0.16667);
-      width: $size;
-      height: $size;
-    }
+@mixin variants {
+  @each $variant in $variants {
+    &.#{$component}--#{$variant} {
+      &.#{$form}--highlight {
+        input + .#{$component}-target {
+          border-color: variant($variant, border-color);
+        }
+      }
 
-    input {
-      width: $size;
-      height: $size;
-    }
-  }
-}
+      input {
+        &:checked + .#{$component}-target {
+          border-color: variant($variant, border-color);
 
-@mixin radio-highlight($color) {
-  .#{c('ERadio') + e('box')} {
-    border-color: color($color, 8);
-  }
+          .#{$component}-inner-target {
+            background-color: variant($variant, background-color);
+            color: variant($variant, color); // No effect.
+          }
+        }
 
-  input:disabled + .#{c('ERadio') + e('box')} {
-    border-color: color($color, 8);
-  }
-}
+        &:focus + .#{$component}-target {
+          border-color: variant($variant, border-color, focus);
+          box-shadow: 0
+            0
+            0
+            v(focus-shadow-size)
+            variant($variant, box-shadow-color);
+        }
 
-@mixin radio-color($color) {
-  &.#{c('ERadio') + m('highlight')} {
-    @include radio-highlight($color);
-  }
+        &:disabled:checked + .#{$component}-target {
+          border-color: variant($variant, border-color, disabled);
 
-  input {
-    &:checked {
-      + .#{c('ERadio') + e('box')} {
-        border-color: color($color, 8);
-        .#{c('ERadio') + e('inner-box')} {
-          background-color: color($color, 8);
+          .#{$component}-inner-target {
+            background-color: variant($variant, background-color, disabled);
+            color: variant($variant, color); // No effect.
+          }
         }
       }
     }
-
-    &:focus {
-      + .#{c('ERadio') + e('box')} {
-        border-color: color($color, 8);
-        box-shadow: 0 0 0 v(focus-shadow-size, c('ERadio')) color($color, 'T20');
-      }
-    }
-
-    &:disabled:checked {
-      + .#{c('ERadio') + e('box')} {
-        border-color: color($color, 4);
-        .#{c('ERadio') + e('inner-box')} {
-          background-color: color($color, 4);
-        }
-      }
-    }
-
-    &:disabled:not(:checked) {
-      + .#{c('ERadio') + e('box')} {
-        background-color: v(background-color--disabled);
-      }
-    }
   }
 }
 
-.#{c('ERadio')} {
+.#{$component} {
   display: inline-flex;
   position: relative;
   align-items: center;
 
   // https://stackoverflow.com/questions/48117071/element-with-display-inline-flex-has-a-strange-top-margin
   vertical-align: middle;
+  line-height: v(line-height, $component);
 
-  &.#{c('ERadio') + m('block')} {
-    width: 100%;
+  @include variants;
+
+  &.#{$component}--block {
     display: flex;
+    width: 100%;
   }
 
-  .#{c('ERadio') + e('box')} {
-    flex-shrink: 0;
+  .#{$component}-target {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: v(border-width, c('ERadio')) solid v(border-color, c('ERadio'));
-    background-color: v(background-color);
-    border-radius: v(border-radius, c('ERadio'));
-    box-shadow: 0 0 0 v(focus-shadow-size) transparent;
-    transition: border-color v(transition-time) v(transition-type),
+    flex-shrink: 0;
+
+    width: v(size, $component);
+    height: v(size, $component);
+
+    padding: calc(v(size, $component) * 0.16667);
+
+    background-color: v(background-color, $component);
+    border: v(border-width, $component) solid v(border-color, $component);
+    border-radius: v(border-radius, $component);
+
+    transition:
+      border-color v(transition-time) v(transition-type),
       background-color v(transition-time) v(transition-type),
       box-shadow v(transition-time) v(transition-type);
 
-    color: transparent;
-
-    .#{c('ERadio') + e('inner-box')} {
-      transition: background-color v(transition-time) v(transition-type);
-      border-radius: v(border-radius, c('ERadio'));
+    .#{$component}-inner-target {
       width: 100%;
       height: 100%;
+      border-radius: v(border-radius, $component);
+      transition: background-color v(transition-time) v(transition-type);
     }
   }
 
-  .#{c('ERadio') + e('inner')} {
+  .#{$component}-inner {
     > div:first-of-type {
       display: flex;
-      align-items: center;
 
-      .#{c('EFormControl') + e('label')} {
+      .#{c('EFormLabel')} {
         display: block;
-        margin-bottom: 0;
+        padding-bottom: 0;
         padding-left: v(spacing-xs);
+
+        // Aligns the first line of the label with the radio target.
+        margin-top: calc(
+          (v(line-height, $component) * 1em - v(size, $component)) / 2 * -1
+        );
       }
+    }
+
+    .#{$component}-context {
+      margin-left: calc(v(size, $component) + v(spacing-xs));
     }
   }
 
   input {
     position: absolute;
+    width: v(size, $component);
+    height: v(size, $component);
     margin: 0;
     opacity: 0;
     z-index: 1;
-  }
 
-  @mixin radio-variant($variant) {
-    &.#{c('ERadio') + m($variant)} {
-      @include radio-color($variant);
+    &:disabled:not(:checked) + .#{$component}-target {
+      background-color: v(background-color--disabled, $component);
+      border-color: v(border-color--disabled, $component);
     }
   }
 
-  @each $variant in $e-palettes {
-    @include radio-variant($variant);
-  }
+  &.#{$form}--highlight.#{$form}--feedback {
+    input {
+      &:not(:checked) + .#{$component}-target {
+        border-color: variant(feedback, border-color);
+      }
 
-  &.#{c('ERadio') + m('feedback-error')} {
-    @include radio-color('error');
+      &:not(:checked):not(:disabled):not(:focus):hover + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
 
-    .#{c('ERadio') + e('box')} {
-      border-color: color('error', 8);
+      &:not(:checked):not(:disabled):active + .#{$component}-target {
+        border-color: variant(feedback, border-color, active);
+      }
+
+      &:not(:checked):focus + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
+
+      &:not(:checked):disabled + .#{$component}-target {
+        border-color: variant(feedback, border-color, disabled);
+      }
     }
   }
-
-  &.#{c('ERadio') + m('feedback-success')} {
-    @include radio-color('success');
-
-    .#{c('ERadio') + e('box')} {
-      border-color: color('success', 8);
-    }
-  }
-
-  @include radio-size('md', v(size, c('ERadio')));
-  @include radio-size('sm', v(size-sm, c('ERadio')));
-  @include radio-size('lg', v(size-lg, c('ERadio')));
 }

@@ -1,100 +1,58 @@
-import * as link from '~/common/components/ELink/docs';
-import { ComponentName } from '~/common/enums';
-import { ComponentDocs } from '~/common/types';
-import config from '~/common/utility/default-config';
-import { EButtonComponent } from '.';
+import { config } from '~/common/config';
+import { block, component, disabled, link, variant } from '~/common/docs';
+import { Documentation } from '~/common/types';
+import { EButton, configuration } from './EButton';
 
-const def = config.components.EButton.props;
+const defaults = config.components.EButton.props;
 
-const docs: ComponentDocs<EButtonComponent> = {
-  name: ComponentName.EButton,
-  description:
-    'The button component represents a clickable button, used to submit forms or anywhere in a document for accessible, standard button functionality.',
-  props: [
+export const documentation: Documentation<EButton> = {
+  props: {
+    ...block.props,
+    ...component.props,
+    ...disabled.props,
     ...link.props,
-    {
-      name: 'id',
-      type: 'string',
-      description: 'ID attribute to set on the root element.',
+    ...variant.props,
+    variant: {
+      ...variant.props.variant,
+      default: defaults.variant,
     },
-    {
-      name: 'block',
-      type: 'boolean',
-      default: def.block,
-      description:
-        'With the block prop, the button will span the whole container width.',
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: def.disabled,
-      description: 'Disables button default functionality.',
-    },
-    {
-      name: 'size',
-      type: 'string',
-      default: def.size,
-      description:
-        'Sets the button size. Included sizes are `sm`, `md` or `lg`.',
-    },
-    {
-      name: 'variant',
-      type: 'string',
-      default: def.variant,
-      description:
-        'Sets the button variant according to the [theme configuration](/elements/configuration/themes).',
-    },
-    {
-      name: 'outline',
-      type: 'boolean',
-      default: def.outline,
-      description: 'Sets the button appearance to outline.',
-    },
-    {
-      name: 'tag',
-      type: 'string',
-      default: def.tag,
+    tag: {
+      type: ['string'],
+      default: defaults.tag,
       description: 'Sets the button element tag.',
     },
-    {
-      name: 'type',
-      type: 'string',
-      default: def.type,
+    type: {
+      type: ['string'],
       description: 'Sets the type attribute on the button element.',
     },
-    {
-      name: 'icon',
-      type: 'string',
-      default: def.icon,
+    icon: {
+      type: ['string'],
       description:
         'Shows an icon in the button (on the left side, by default) according to the configured Icon component.',
     },
-    {
-      name: 'iconLeft',
-      type: 'string',
-      default: def.iconLeft,
+    iconLeft: {
+      type: ['string'],
       description: 'Shows the icon on the left side of the text.',
     },
-    {
-      name: 'iconRight',
-      type: 'string',
-      default: def.iconRight,
+    iconRight: {
+      type: ['string'],
       description: 'Shows the icon on the right side of the text.',
     },
-    {
-      name: 'loading',
-      type: 'boolean',
-      default: def.loading,
+    loading: {
+      type: ['boolean'],
       description: 'If true, shows the Loading component inside the button.',
     },
-  ],
-  slots: [
-    {
-      name: 'default',
+  },
+  slots: {
+    ...component.slots,
+    ...block.slots,
+    ...variant.slots,
+    ...link.slots,
+    default: {
       description: 'Content to show inside the button.',
+      properties: {},
     },
-  ],
-  events: [],
+  },
+  emits: {},
+  style: configuration.style,
 };
-
-export default docs;

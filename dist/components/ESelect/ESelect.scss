@@ -1,4 +1,3 @@
-@use 'sass:math';
 @import '../../theme/imports';
 
 $select-base-gap-x: 5%;
@@ -6,173 +5,101 @@ $select-gap-x: calc(#{$select-base-gap-x} - 4px);
 $select-gap-x_edge: calc(#{$select-base-gap-x} - 3px);
 $select-gap-x_ie: calc(#{$select-base-gap-x} - 2px);
 
-@mixin select-highlight($color) {
-  select {
-    border-color: color($color, 8);
-    &:disabled {
-      border-color: color($color, 3);
+$form: c('EFormInput');
+$component: c('ESelect');
+
+@mixin variants {
+  @each $variant in $variants {
+    &.#{$component}--#{$variant} {
+      &.#{$form}--highlight .#{$component}-target {
+        border-color: variant($variant, border-color);
+      }
+
+      .#{$component}-target {
+        &:focus {
+          border-color: variant($variant, border-color, focus);
+          box-shadow: 0
+            0
+            0
+            v(focus-shadow-size)
+            variant($variant, box-shadow-color);
+        }
+
+        &:disabled {
+          border-color: v(border-color--disabled, $component);
+          color: v(text-color--disabled, $component);
+        }
+      }
     }
   }
 }
 
-@mixin select-color($color) {
-  &.#{c('ESelect') + m('highlight')} {
-    @include select-highlight($color);
-  }
-
-  select {
-    &:focus {
-      border-color: color($color, 6);
-    }
-
-    &:not(:disabled):active {
-      border-color: color($color, 8);
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 v(focus-shadow-size) color($color, 'T20');
-    }
-
-    &:disabled {
-      border-color: v(border-color--disabled, c('ESelect'));
-      color: v(text-color--disabled, c('ESelect'));
-    }
-  }
-}
-
-.#{c('ESelect')} {
+.#{$component} {
   display: inline-flex;
   flex-direction: column;
 
-  &.#{c('ESelect') + m('block')} {
-    width: 100%;
+  @include variants;
+
+  line-height: v(line-height, $component);
+
+  &.#{$component}--block {
     display: flex;
-  }
-
-  .#{c('ESelect') + e('icon')} {
-    position: absolute;
-    z-index: 5;
-    right: v(padding-x, c('ESelect'));
-    color: v(text-color--light);
-    pointer-events: none;
-  }
-
-  select {
-    position: relative;
     width: 100%;
-    display: inline-flex;
-    flex: 1;
-    outline: none;
-    appearance: none;
-    background-color: v(background-color, c('ESelect'));
-    transition: border-color v(transition-time) v(transition-type),
-      box-shadow v(transition-time) v(transition-type);
-    padding: v(padding-y, c('ESelect')) v(padding-x, c('ESelect'));
-    border-style: solid;
-    border-width: v(border-width, c('ESelect'));
-    line-height: v(line-height, c('ESelect'));
-    border-radius: v(border-radius, c('ESelect'));
-    border-color: v(border-color, c('ESelect'));
-    color: v(text-color, c('ESelect'));
-    font: inherit;
-    font-size: v(sfont-size, c('ESelect'));
-
-    padding-right: calc(
-      v(padding-x, c('ESelect')) * 1.5 + v(font-size, c('ESelect'))
-    );
-
-    @-moz-document url-prefix() {
-      padding-left: calc(v(padding-x, c('ESelect')) - 0.25rem);
-    }
-
-    &:disabled {
-      color: v(text-color--disabled, c('ESelect'));
-      background-color: v(background-color--disabled, c('ESelect'));
-      border-color: v(border-color--disabled, c('ESelect'));
-      + .#{c('ESelect') + e('icon')} {
-        color: v(placeholder-color--disabled, c('ESelect'));
-      }
-    }
-
-    &:focus {
-      z-index: 3;
-    }
   }
 
-  @mixin select-variant($variant) {
-    &.#{c('ESelect') + m($variant)} {
-      @include select-color($variant);
-    }
-  }
-
-  @each $variant in $e-palettes {
-    @include select-variant($variant);
-  }
-
-  &.#{c('ESelect') + m('feedback-error')} {
-    @include select-color('error');
-
-    &.#{c('ESelect') + m('hightlight')} {
-      @include select-highlight('error');
-    }
-  }
-
-  &.#{c('ESelect') + m('feedback-success')} {
-    @include select-color('success');
-
-    &.#{c('ESelect') + m('hightlight')} {
-      @include select-highlight('success');
-    }
-  }
-
-  .#{c('ESelect') + e('inner')} {
+  .#{$component}-inner {
     display: flex;
 
-    .#{c('ESelect') + e('element')} {
+    > div {
       position: relative;
       display: flex;
       align-items: center;
       width: 100%;
+
+      .#{$component}-icon {
+        position: absolute;
+        z-index: 5;
+        right: v(padding-x, $component);
+        color: v(text-color--light);
+        pointer-events: none;
+      }
     }
   }
 
-  &.#{c('ESelect') + m('sm')} {
-    font-size: v(font-size-sm, c('ESelect'));
+  .#{$component}-target {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex: 1;
 
-    select {
-      padding: v(padding-y-sm, c('ESelect')) v(padding-x-sm, c('ESelect'));
-      padding-right: calc(
-        v(padding-x-sm, c('ESelect')) * 1.5 + v(font-size-sm, c('ESelect'))
-      );
-      line-height: v(line-height-sm, c('ESelect'));
+    padding: v(padding-y, $component) v(padding-x, $component);
 
-      @-moz-document url-prefix() {
-        padding-left: calc(v(padding-x-sm, c('ESelect')) - 0.25rem);
+    background-color: v(background-color, $component);
+    border: v(border-width, $component) solid v(border-color, $component);
+    border-radius: v(border-radius, $component);
+
+    color: v(text-color, $component);
+    font: inherit;
+    font-size: v(font-size, $component);
+    outline: none;
+    appearance: none;
+
+    transition:
+      border-color v(transition-time) v(transition-type),
+      box-shadow v(transition-time) v(transition-type);
+
+    padding-right: calc(
+      v(padding-x, $component) * 2 + v(font-size, $component)
+    ); // Extra padding to make space for the icon.
+
+    &:disabled {
+      background-color: v(background-color--disabled, $component);
+      border-color: v(border-color--disabled, $component);
+      color: v(text-color--disabled, $component);
+
+      + .#{$component}--icon {
+        color: v(placeholder-color--disabled, $component);
       }
-    }
-
-    .#{c('ESelect') + e('icon')} {
-      right: v(padding-x-sm, c('ESelect'));
-    }
-  }
-
-  &.#{c('ESelect') + m('lg')} {
-    font-size: v(font-size-lg, c('ESelect'));
-
-    select {
-      padding: v(padding-y-lg, c('ESelect')) v(padding-x-lg, c('ESelect'));
-      padding-right: calc(
-        v(padding-x-lg, c('ESelect')) * 1.5 + v(font-size-lg, c('ESelect'))
-      );
-      line-height: v(line-height-lg, c('ESelect'));
-
-      @-moz-document url-prefix() {
-        padding-left: calc(v(padding-x-lg, c('ESelect')) - 0.25rem);
-      }
-    }
-
-    .#{c('ESelect') + e('icon')} {
-      right: v(padding-x-lg, c('ESelect'));
     }
   }
 }

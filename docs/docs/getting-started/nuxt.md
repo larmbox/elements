@@ -20,4 +20,4 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 ```
 
-Stylesheets are loaded [just like in Vue](/getting-started/introduction#stylesheet).
+Stylesheets are loaded [just like in Vue](/getting-started/installation#stylesheet).

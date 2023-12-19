@@ -2,7 +2,10 @@
 
 The icon component provides allows you to easily use an icon library.
 
-Elements does not include a default icon library. This page uses the [Bootstrap Icons](https://icons.getbootstrap.com/) library to display example icons.
+:::tip
+Elements does not include any default icons. This page uses the [Bootstrap
+Icons](https://icons.getbootstrap.com/) library to display example icons.
+:::
 
 <Snippet :code="example" />
 
@@ -10,12 +13,17 @@ Elements does not include a default icon library. This page uses the [Bootstrap 
 
 The icons automatically inherit the font size of the parent container.
 
-<Snippet :code="sizes" class="gap" />
+<Snippet :code="sizes" class="wrap" />
 
 ## SVG
 
 Instead of font-based icons, you can reference SVG files. Set the `type` prop
 to `svg` and provide the `href` prop, linking to an SVG file.
+
+:::warning
+This method has some limitations. Unlike [sprites](#sprite) and
+[font-based](#font-based) icons, SVG icons cannot be colored using CSS.
+:::
 
 <Snippet :code="svg" />
 
@@ -26,54 +34,68 @@ adding the `sprite` prop:
 
 <Snippet :code="sprite" />
 
-::: tip
-Check the page source to see how this method differs from the icon-based method.
-:::
-
 ::: warning
 Browsers apply the same-origin policy on `<use>` elements and do not load
 cross-origin URLs in the `href` attribute.
 :::
 
-## Example Configuration
+## Font-based
 
-Below are some configurations for popular icon libraries.
+You can use any icon library that provides a font-based icon set. See the [example
+configurations](#example-configuration) for some popular icon libraries.
 
-### Bootstrap Icons
+### Example Configuration
 
-Import in your .scss file:
+Below are configurations to make some popular icon libraries work with
+Elements. The following configurations are made in the [global
+configuration](/getting-started/installation#configuration). You can also set
+the props directly on the `EIcon` component.
+
+#### Bootstrap Icons
+
+Import in your `.scss` file:
 
 ```scss
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 ```
 
-Set [global configuration](/configuration/global-configuration) for Icon:
+Add the following entry for `EIcon` in the [global configuration](/getting-started/installation#configuration):
 
 ```ts
 EIcon: {
-  config: { tag: 'i', type: 'class', prefix: 'bi-', className: '' }
+  config: {
+    tag: 'i',
+    type: 'class',
+    prefix: 'bi-',
+    className: ''
+  }
 }
 ```
 
-### Material Icons
+#### Material Icons
 
-Import in your .scss file:
+Import in your `.scss` file:
 
 ```scss
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 ```
 
-Set [global configuration](/configuration/global-configuration) for Icon:
+Add the following entry for `EIcon` in the [global configuration](/getting-started/installation#configuration):
 
 ```ts
 EIcon: {
-  config: { tag: 'span', type: 'inline', prefix: '', className: 'material-icons' }
+  config: {
+    tag: 'span',
+    type: 'inline',
+    prefix: '',
+    className: 'material-icons'
+  }
 }
 ```
 
 ## Component Reference
 
-<ComponentMeta src="EIcon" />
+<ComponentReference src="EIcon" />
 
 <script lang="ts" setup>
 import {ref} from 'vue';
@@ -89,7 +111,7 @@ const sizes = `
 `
 
 const svg = `
-<EIcon type="svg" icon="/elements/test-icon.svg" />
+<EIcon type="svg" icon="/elements/box.svg" sprite="" />
 `
 
 const sprite = `

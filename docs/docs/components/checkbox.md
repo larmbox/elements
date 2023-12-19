@@ -4,87 +4,76 @@ The checkbox is shown as a square box that is ticked (checked) when activated. C
 
 <Snippet :code="example" />
 
-## Size
-
-The checkbox component allows a `size` prop. Elements provides CSS rules for the small, default and large size options.
-
-<Snippet :code="sizes" class="gap-lg" />
-
 ## Variant
 
-Use the `variant` prop to change the checkbox theming according to your configured [themes](/configuration/themes/).
+Use the `variant` prop to change the checkbox theming according to your configured [variants](/theme/variants).
 
-<Snippet :code="variants" class="gap-lg" />
+<Snippet :code="variants" class="wrap" />
 
 ### Highlight
 
 Set the `highlight` prop to override the default border color with the variant color.
 
-<Snippet :code="highlight" class="gap-lg" />
+<Snippet :code="highlight" class="wrap" />
 
 Highlight is automatically set to `true` if the [feedback](#feedback) prop is set. Set `highlight` to `false` to override feedback highlighting.
 
-<Snippet :code="highlightFeedback" class="gap-lg" />
+<Snippet :code="highlightFeedback" class="wrap" />
 
 ## Labels
 
 Use the `label`, and `description` props to describe your checkbox.
 
-<Snippet :code="labels" />
+<Snippet :code="labels" class="wrap" />
 
 You can also use slots for more freedom on label content. Please see the [Slots](#slots) section for information on slot variables.
 
-<Snippet :code="labelsSlots" />
+<Snippet :code="labelsSlots" class="wrap" />
 
 ## Block
 
 By default the switch component is displayed as an inline element. By adding the `block` prop, the input container will span the whole container width.
 
-<Snippet :code="block" />
+<Snippet :code="block" class="wrap" />
 
 ## Disabled
 
 A disabled checkbox cannot be interacted with.
 
-<Snippet :code="disabled" />
+<Snippet :code="disabled" class="wrap" />
 
 ## Indeterminate
 
 Set the indeterminate prop to render a checkbox in an indeterminate state. This only affects the element visually and the checkbox works like usual.
 
-<Snippet :code="indeterminate" />
+<Snippet :code="indeterminate" class="wrap" />
 
 ## Feedback
 
-Use the `feedback` prop to add validation or other form errors to your checkbox input. Elements provides variants for error and success feedback types.
+Use the `feedback` prop to add validation or other form errors to your checkbox input. The `feedback` prop controls the `invalid` attribute on the input element.
 
-<Snippet :code="feedback" />
+<Snippet :code="feedback" class="wrap" />
+
+You can also use slots for more flexibility on feedback content. Please refer to the
+[feedback slot](#slot-feedback) for information.
+
+<Snippet :code="feedbackSlots" class="wrap" />
 
 ## Component Reference
 
-<ComponentMeta src="ECheckbox" />
+<ComponentReference src="ECheckbox" />
 
 <script lang="ts" setup>
 const example = `<ECheckbox label="Checkbox" />`
 
-const sizes = `
-<ECheckbox size="sm" label="Small" block />
-<ECheckbox size="md" label="Default" block />
-<ECheckbox size="lg" label="Large" block />
-`
-
 const variants = `
 <ECheckbox variant="primary" label="Primary" checked />
 <ECheckbox variant="secondary" label="Secondary" checked />
-<ECheckbox variant="error" label="Error" checked />
-<ECheckbox variant="success" label="Success" checked />
 `
 
 const highlight = `
 <ECheckbox highlight variant="primary" label="Primary" />
 <ECheckbox highlight variant="secondary" label="Secondary" />
-<ECheckbox highlight variant="error" label="Error" />
-<ECheckbox highlight variant="success" label="Success" />
 `
 
 const highlightFeedback = `
@@ -101,30 +90,41 @@ const labels = `
 `
 
 const labelsSlots = `
-<ECheckbox checked>
-  <template #label="{ id }">
-    <label :for="id">Label</label>
-  </template>
-  <template #description>
-    <span style="color: purple" v-text="'Description'" />
-  </template>
-</ECheckbox>
+<template>
+  <ECheckbox checked>
+    <template #label="{ id }">
+      <label :for="id">Label</label>
+    </template>
+    <template #description>
+      <span style="color: var(--primary-color)" v-text="'Description'" />
+    </template>
+  </ECheckbox>
+</template>
 `
 
 const block = `
-<ECheckbox block label="Block" margin checked />
+<ECheckbox block label="Block" checked />
 <ECheckbox block label="Block 2" checked />
 `
 
 const disabled = `
-<ECheckbox disabled label="Disabled" block margin />
-<ECheckbox disabled checked label="Disabled" block />`
+<ECheckbox disabled label="Disabled" />
+<ECheckbox disabled checked label="Disabled" />`
 
 const indeterminate = `
 <ECheckbox indeterminate label="Indeterminate" checked />`
 
 const feedback = `
-<ECheckbox label="Checkbox" block feedback="Bad!" margin />
-<ECheckbox label="Checkbox" block feedback="Good!" feedback-type="success" />
+<ECheckbox label="Checkbox" feedback="Bad!" />
+`
+
+const feedbackSlots = `
+<template>
+  <ECheckbox label="Checkbox">
+    <template #feedback>
+      <strong style="text-decoration: underline" v-text="'Very bad!'" />
+    </template>
+  </ECheckbox>
+</template>
 `
 </script>

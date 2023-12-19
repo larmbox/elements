@@ -1,0 +1,12 @@
+@import '../../theme/imports';
+
+$component: c('EFormInput');
+
+.#{$component} {
+  line-height: v(line-height);
+
+  .#{c('EFormFeedback')},
+  .#{c('EFormDescription')} {
+    margin-top: calc(v(spacing-xs) / 2);
+  }
+}

@@ -1,0 +1,11 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+$component: c('EFormFeedback');
+
+.#{$component} {
+  display: block;
+  font-size: v(font-size-sm);
+  line-height: v(line-height);
+  color: v(feedback-color);
+}

@@ -1,9 +1,5 @@
-.cache
-.temp
 node_modules
-
-.test-environment
-*-labox-*.tgz
 coverage
-
 nuxt
+docs/docs/.vitepress/dist
+docs/docs/.vitepress/cache

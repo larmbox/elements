@@ -2,7 +2,12 @@
 @import 'elements-base';
 @import 'animations';
 
-@import '../common/components/EFormControl/EFormControl';
+@import '../components/EFormInput/EFormInput';
+@import '../components/EFormInputField/EFormInputField';
+@import '../components/EFormLabel/EFormLabel';
+@import '../components/EFormDescription/EFormDescription';
+@import '../components/EFormHint/EFormHint';
+@import '../components/EFormFeedback/EFormFeedback';
 @import '../components/ELoading/ELoading';
 @import '../components/EButton/EButton';
 @import '../components/ECheckbox/ECheckbox';

@@ -1,65 +1,60 @@
-import { ComponentName } from '~/common/enums';
-import { ComponentDocs } from '~/common/types';
-import config from '~/common/utility/default-config';
-import { EIconComponent } from '.';
+import { config } from '~/common/config';
+import { component } from '~/common/docs';
+import { Documentation } from '~/common/types';
+import { EIcon, configuration } from './EIcon';
 
-const meta: ComponentDocs<EIconComponent> = {
-  name: ComponentName.EIcon,
-  description:
-    'The icon component provides an easy way to use various font-based icon libraries.',
-  props: [
-    {
-      name: 'i',
-      type: 'string',
-      default: config.components.EIcon.props.i,
-      description: 'Alias for the **icon** prop.',
-    },
-    {
-      name: 'icon',
-      type: 'string',
-      default: config.components.EIcon.props.icon,
+const defaults = config.components.EIcon.props;
+
+export const documentation: Documentation<EIcon> = {
+  props: {
+    ...component.props,
+    icon: {
+      type: ['string'],
+      required: true,
       description: 'The icon to show.',
     },
-    {
-      name: 'prefix',
-      type: 'string',
-      default: config.components.EIcon.props.prefix,
-      description: 'Prefix added to the **icon** prop.',
+    className: {
+      type: ['string'],
+      description: 'The class name to apply to the icon.',
     },
-    {
-      name: 'type',
-      type: 'string',
-      default: config.components.EIcon.props.type,
-      description:
-        'Possible values are **"class"**, **"inline"** or **"svg"**.',
+    sprite: {
+      type: ['string'],
+      description: 'The sprite to use.',
+      since: '0.0.28',
     },
-    {
-      name: 'tag',
-      type: 'string',
-      default: config.components.EIcon.props.tag,
+    prefix: {
+      type: ['string'],
+      default: defaults.prefix,
+      description: 'Prefix added to the `icon` prop.',
+    },
+    type: {
+      type: ['string'],
+      default: defaults.type,
+      description: 'Possible values are `class`, `inline` or `svg`',
+    },
+    tag: {
+      type: ['string'],
+      default: defaults.tag,
       description: 'The tag type to render the icon in.',
     },
-    {
-      name: 'width',
-      type: 'string',
-      default: config.components.EIcon.props.width,
-      description: 'Only applies if type is "svg".',
+    width: {
+      type: ['string'],
+      default: defaults.width,
+      description: 'Only applies if type is `svg`.',
+      since: '0.0.28',
     },
-    {
-      name: 'height',
-      type: 'string',
-      default: config.components.EIcon.props.height,
-      description: 'Only applies if type is "svg".',
+    height: {
+      type: ['string'],
+      default: defaults.height,
+      description: 'Only applies if type is `svg`.',
+      since: '0.0.28',
     },
-    {
-      name: 'sprite',
-      type: 'string',
-      default: config.components.EIcon.props.sprite,
-      description: 'Path to the sprite file. Only applies if type is "svg".',
-    },
-  ],
-  slots: [],
-  events: [],
+  },
+  slots: {
+    ...component.slots,
+  },
+  emits: {
+    ...component.slots,
+  },
+  style: configuration.style,
 };
-
-export default meta;

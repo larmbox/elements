@@ -1,0 +1,19 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+$component: c('EFormLabel');
+
+.#{$component} {
+  padding-bottom: calc(v(spacing-xs) * 0.75);
+  font-weight: 500;
+  font-size: v(font-size-md);
+  width: fit-content;
+
+  &.#{$component}--required {
+    &:after {
+      content: '*';
+      margin-left: 0.15rem;
+      color: v(feedback-color);
+    }
+  }
+}

@@ -2,29 +2,18 @@
 
 The loading component is used to show users that an activity is happening in the background.
 
-<Snippet :code="example" class="gap" />
+<Snippet :code="example" />
 
-## Size
+## Size & Color
 
-The loading component allows a `size` prop. Elements provides CSS rules for the small, default and large size options.
+The loading component inherits the font size of the parent element. It also
+inherits the text color of the parent element.
 
-<Snippet :code="sizes" class="gap"  />
-
-## Mode
-
-Elements provides two loading animation modes, `spinner` and `dots`.
-
-<Snippet :code="modes" class="gap" />
-
-## Variant
-
-Use the `variant` prop to change the button theming according to your configured [themes](/configuration/themes/).
-
-<Snippet :code="variants" class="gap" />
+<Snippet :code="variants" class="wrap"  />
 
 ## Component Reference
 
-<ComponentMeta src="ELoading" />
+<ComponentReference src="ELoading" />
 
 <script lang="ts" setup>
 import {ref} from 'vue';
@@ -33,26 +22,12 @@ const example = `
 <ELoading />
 `
 
-const sizes = `
-<ELoading size="sm" />
-<ELoading size="md" />
-<ELoading size="lg" />
-`
-
-const modes = `
-<ELoading mode="spinner" />
-<ELoading mode="dots" />
-`
-
 const variants = `
-<ELoading variant="primary" mode="spinner" />
-<ELoading variant="secondary" mode="spinner" />
-<ELoading variant="error" mode="spinner" />
-<ELoading variant="success" mode="spinner" />
-<ELoading variant="primary" mode="dots" />
-<ELoading variant="secondary" mode="dots" />
-<ELoading variant="error" mode="dots" />
-<ELoading variant="success" mode="dots" />
+<ELoading />
+<ELoading style="font-size: 2rem" />
+<ELoading style="font-size: 3rem" />
+<ELoading style="font-size: 3rem; color: var(--primary-color)" />
+<ELoading style="font-size: 2rem; color: var(--secondary-color)" />
+<ELoading style="color: red" />
 `
-
 </script>

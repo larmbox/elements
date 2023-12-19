@@ -1,5 +1,5 @@
 <p align="">
-  <img src="https://cdn.larmbox.com/assets/labox-logo.png" width="64"  />
+  <img src="https://larmbox.github.io/elements/elements-logo.svg" width="64"  />
   <h1 align="">Larmbox Elements</h1>
 </p>
 

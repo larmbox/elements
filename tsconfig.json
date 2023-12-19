@@ -1,55 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "baseUrl": ".",
-    "target": "es2020",
-    "module": "es2020",
+    "module": "ESNext",
     "strict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true,
-    "declaration": true,
-    "sourceMap": true,
-    "jsx": "preserve",
-    "types": [
-      "node",
-      "vue"
+    "lib": [
+      "ES2022",
+      "DOM"
     ],
+    "moduleResolution": "node",
+    "jsx": "preserve",
     "paths": {
       "~/*": [
         "./src/*"
       ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    }
   },
   "include": [
-    "src",
-    "docs",
-    ".vuepress",
-  ],
-  "exclude": [
-    "node_modules/**/*",
-    "tests",
-    "dist",
-    "coverage",
-    "__snapshots__",
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "resolveJsonModule": true,
-      "module": "CommonJS",
-    }
-  }
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.vue"
+  ]
 }

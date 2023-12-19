@@ -1,100 +1,47 @@
 @use 'sass:math';
 @import '../../theme/imports';
 
-@mixin tooltip-color($color) {
-  .#{c('ETooltip') + e('inner')} .#{c('ETooltip') + e('content')} {
-    background-color: color($color, 8);
-    color: contrast-tone(color($color, 8));
-  }
+$component: c('ETooltip');
 
-  .#{c('ETooltip') + e('arrow')}::before {
-    background-color: color($color, 8);
-  }
-}
-
-.#{c('ETooltip') + e('trigger')} {
+.#{$component}-trigger {
   display: inline-flex;
 }
 
-.#{c('ETooltip')} {
+.#{$component} {
   display: inline-flex;
-  border-radius: v(border-radius, c('ETooltip'));
-  color: v(text-color, c('ETooltip'));
+  color: v(text-color, $component);
+  pointer-events: none;
+  position: absolute;
+  width: max-content;
+  top: 0;
+  left: 0;
+  z-index: v(z-index, $component);
 
-  @mixin tooltip-variant($variant) {
-    &.#{c('ETooltip') + m($variant)} {
-      @include tooltip-color($variant);
-    }
+  border-radius: v(border-radius, $component);
+  padding: v(padding-y, $component) v(padding-x, $component);
+  font-size: v(font-size, $component);
+  max-width: v(max-width, $component);
+  background-color: v(background-color, $component);
+  box-shadow: v(box-shadow, $component);
+  transform-origin: center;
+
+  &.interactive {
+    pointer-events: all;
   }
 
-  @each $variant in $e-palettes {
-    @include tooltip-variant($variant);
-  }
-
-  .#{c('ETooltip') + e('inner')} {
-    .#{c('ETooltip') + e('content')} {
-      border-radius: v(border-radius, c('ETooltip'));
-      padding: v(padding-y, c('ETooltip')) v(padding-x, c('ETooltip'));
-      font-size: v(font-size, c('ETooltip'));
-      max-width: v(max-width, c('ETooltip'));
-    }
-
-    .#{c('ETooltip') + e('arrow')},
-    .#{c('ETooltip') + e('arrow')}::before {
-      position: absolute;
-      width: v(arrow-size, c('ETooltip'));
-      height: v(arrow-size, c('ETooltip'));
-    }
-
-    .#{c('ETooltip') + e('arrow')}::before {
-      content: '';
-      transform: rotate(45deg);
-      top: 0;
-      left: 0;
-    }
+  .#{$component}-arrow {
+    position: absolute;
+    background-color: v(background-color, $component);
+    transform: rotate(45deg);
   }
 }
 
-.lb-tooltip-animation-enter-active,
-.lb-tooltip-animation-leave-active {
-  transition: opacity 0.05s ease;
-  .#{c('ETooltip') + e('content')} {
-    transition: transform 0.05s ease;
-  }
+.#{$component}-animation-enter-active,
+.#{$component}-animation-leave-active {
+  transition: opacity calc(v(transition-time)) v(transition-type);
 }
 
-.lb-tooltip-animation-enter-from,
-.lb-tooltip-animation-leave-to {
-  opacity: 0.5;
-  .#{c('ETooltip') + e('content')} {
-    transform: scale(0.9);
-  }
-}
-
-.#{c('ETooltip')
-  + e('inner')}[data-popper-placement^='top']
-  .#{c('ETooltip')
-  + e('arrow')} {
-  bottom: -4px;
-}
-
-.#{c('ETooltip')
-  + e('inner')}[data-popper-placement^='bottom']
-  .#{c('ETooltip')
-  + e('arrow')} {
-  top: -4px;
-}
-
-.#{c('ETooltip')
-  + e('inner')}[data-popper-placement^='left']
-  .#{c('ETooltip')
-  + e('arrow')} {
-  right: -4px;
-}
-
-.#{c('ETooltip')
-  + e('inner')}[data-popper-placement^='right']
-  .#{c('ETooltip')
-  + e('arrow')} {
-  left: -4px;
+.#{$component}-animation-enter-from,
+.#{$component}-animation-leave-to {
+  opacity: 0;
 }

@@ -1,0 +1,15 @@
+@use 'sass:math';
+@import '../../theme/imports';
+
+$component: c('EFormHint');
+$feedback: c('EFormFeedback');
+
+.#{$component} {
+  display: block;
+  font-size: v(font-size-sm);
+  color: v(text-color--light);
+}
+
+.#{$feedback} + .#{$component} {
+  margin-top: 0;
+}

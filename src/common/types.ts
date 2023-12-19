@@ -1,120 +1,247 @@
-import { ComputedRef, Ref } from 'vue';
-import {
-  EButtonComponent,
-  ECheckboxComponent,
-  EIconComponent,
-  EInputComponent,
-  ELoadingComponent,
-  EModalComponent,
-  ERadioComponent,
-  ESelectComponent,
-  ESwitchComponent,
-  ETextareaComponent,
-  EThemeProviderComponent,
-  ETooltipComponent,
+/* eslint-disable @typescript-eslint/ban-types */
+import { ComputedRef, ExtractPropTypes, PropType } from 'vue';
+import type {
+  EButton,
+  ECheckbox,
+  EFormDescription,
+  EFormFeedback,
+  EFormHint,
+  EFormInput,
+  EFormInputField,
+  EFormLabel,
+  EIcon,
+  EInput,
+  ELoading,
+  EModal,
+  ERadio,
+  ESelect,
+  ESwitch,
+  ETextarea,
+  EThemeProvider,
+  ETooltip,
 } from '~/components';
-import { EFormControlComponent } from './components/EFormControl';
+import { ComponentName } from './enums';
+import { InferPropType, RequiredKeys } from './types.internal';
 
-export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-export type RequiredBy<T, K extends keyof T> = Omit<T, K> &
-  Required<Pick<T, K>>;
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
+export type Booleanish = boolean | 'true' | 'false';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type GenericProps = Record<string, any>;
-export type GenericComponent = Component<
-  keyof Components,
-  unknown,
-  GenericProps
+type TypeObj<T> = {
+  [K in keyof T]: T[K] extends number
+    ? number
+    : T[K] extends string
+    ? string
+    : T[K];
+};
+
+type Prop<T = any> = {
+  type: PropType<T>;
+  default?: boolean;
+  required?: boolean;
+  _preset?: true;
+  _verbose?: boolean;
+  validator?(value: unknown): boolean;
+};
+type Slot = {
+  properties: Record<string, unknown>;
+};
+type Emit = (...args: any[]) => unknown;
+type Style = string | number;
+
+type Props = Record<string, Prop>;
+type Emits = Record<string, Emit>;
+type Styles = Record<string, Style>;
+type Slots = Record<string, Slot>;
+
+type AllProperties = {
+  style: Styles;
+  props: Props;
+  emits: Emits;
+};
+
+type Configureable<
+  T extends ComponentConfiguration,
+  B extends boolean,
+> = (B extends true
+  ? Omit<Partial<T>, 'name' | 'props' | 'style'> & {
+      /**
+       * The name of the component.
+       * This should not be changed if you are using compiled CSS.
+       */
+      name: string;
+    } // Lose the ComponentName enum restriction.
+  : Omit<T, 'emits' | 'slots' | 'props' | 'style'>) & {
+  props: ExtractProps<T['props']>;
+  style?: Partial<TypeObj<T['style']>>;
+};
+
+export type ComponentConfiguration<T = AllProperties, S = Slots> = T & {
+  name: ComponentName;
+  slots: S;
+};
+
+export type ComposableConfiguration<T = AllProperties, S = Slots> = Omit<
+  ComponentConfiguration<T, S>,
+  'style' | 'name'
 >;
 
-export interface Component<
-  TName extends keyof Components,
-  TOptions,
-  TProps extends Record<string, unknown>
-> {
-  name: TName;
-  options: TOptions;
-  props: TProps;
+export interface Components<U extends boolean = false> {
+  EButton: Configureable<EButton, U>;
+  ECheckbox: Configureable<ECheckbox, U>;
+  EIcon: Configureable<EIcon, U>;
+  EInput: Configureable<EInput, U>;
+  ELoading: Configureable<ELoading, U>;
+  EModal: Configureable<EModal, U>;
+  ERadio: Configureable<ERadio, U>;
+  ESelect: Configureable<ESelect, U>;
+  ESwitch: Configureable<ESwitch, U>;
+  ETextarea: Configureable<ETextarea, U>;
+  EThemeProvider: Configureable<EThemeProvider, U>;
+  ETooltip: Configureable<ETooltip, U>;
+  EFormLabel: Configureable<EFormLabel, U>;
+  EFormInput: Configureable<EFormInput, U>;
+  EFormInputField: Configureable<EFormInputField, U>;
+  EFormDescription: Configureable<EFormDescription, U>;
+  EFormHint: Configureable<EFormHint, U>;
+  EFormFeedback: Configureable<EFormFeedback, U>;
 }
 
-export interface Components<IsCustomizeable extends boolean = false> {
-  EButton: ComponentMap<EButtonComponent, IsCustomizeable>;
-  ECheckbox: ComponentMap<ECheckboxComponent, IsCustomizeable>;
-  EIcon: ComponentMap<EIconComponent, IsCustomizeable>;
-  EInput: ComponentMap<EInputComponent, IsCustomizeable>;
-  ELoading: ComponentMap<ELoadingComponent, IsCustomizeable>;
-  EModal: ComponentMap<EModalComponent, IsCustomizeable>;
-  ERadio: ComponentMap<ERadioComponent, IsCustomizeable>;
-  ESelect: ComponentMap<ESelectComponent, IsCustomizeable>;
-  ESwitch: ComponentMap<ESwitchComponent, IsCustomizeable>;
-  ETextarea: ComponentMap<ETextareaComponent, IsCustomizeable>;
-  EThemeProvider: ComponentMap<EThemeProviderComponent, IsCustomizeable>;
-  ETooltip: ComponentMap<ETooltipComponent, IsCustomizeable>;
-  EFormControl: ComponentMap<EFormControlComponent, IsCustomizeable>;
-}
-
-type ComponentMap<
-  T extends GenericComponent,
-  TBool extends boolean
-> = TBool extends true ? Omit<Partial<T>, 'name'> & { name: string } : T;
-
-// Type to make sure we never set both `include` and `exclude` properties.
-export type BindOptions<T> =
-  | {
-      include: T[];
-      exclude?: never;
-    }
-  | {
-      include?: never;
-      exclude: T[];
-    };
-
-export interface ComponentInstance<T extends GenericComponent> {
+export interface ComponentInstance<T extends ComponentConfiguration> {
   id: ComputedRef<string>;
-  props: Ref<T['props']>;
   name: T['name'];
-  options: T['options'];
-  bindProps: (options?: BindOptions<keyof T['props']>) => GenericProps;
-  bindAttrs: (options?: BindOptions<string>) => GenericProps;
+  props: ComputedRef<ExtractProps<T['props']>>;
+  emits: T['emits'];
+  slots: T['slots'];
+  style: T['style'];
 }
 
-export interface ComponentDocs<T extends GenericComponent> {
+export type ExtractProps<T> = ExtractPropTypes<
+  Omit<
+    {
+      [K in keyof T]: T[K] extends {
+        _preset: true;
+      }
+        ? Omit<T[K], 'required' | 'default'> & { required: true }
+        : Omit<T[K], 'required' | 'default'> & { required: false };
+    },
+    '_preset'
+  >
+>;
+
+interface DocumentationLabels {
+  since?: string;
+  deprecated?: true;
+  nuxt?: true;
+}
+
+type NestedPropDocumentation<T extends Prop> = {
+  id: string;
   name: string;
   description: string;
-  props: {
-    name: keyof T['props'];
-    type: string;
-    default?: unknown;
-    description: string;
-    since?: string;
-    deprecated?: true;
-    nuxt?: true;
-    gc?: true;
-  }[];
-  slots: {
-    name: string;
-    description: string;
-    properties?: {
-      name: string;
-      type: string;
-      description?: string;
-    }[];
-    since?: string;
-    deprecated?: true;
-    nuxt?: true;
-  }[];
-  events: {
-    name: string;
-    description: string;
-    arguments?: {
-      name: string;
-      type: string;
-      description?: string;
-    }[];
-    since?: string;
-    deprecated?: true;
-  }[];
+  literal?: 'string' | 'number' | 'boolean';
+  props: Required<
+    InferPropType<T['type']> extends Array<string | number>
+      ? {
+          [K in InferPropType<T['type']>[number]]: DocumentationLabels & {
+            description: string;
+          };
+        }
+      : InferPropType<T['type']> extends Array<any>
+      ? {
+          [K in keyof Exclude<
+            InferPropType<T['type']>[number],
+            boolean | string | number | false | true | null
+          >]: DocumentationLabels & {
+            type: string[];
+            description: string;
+          } & (K extends RequiredKeys<InferPropType<T['type']>[number]>
+              ? { required: true }
+              : {});
+        }
+      : {
+          [K in keyof Exclude<
+            InferPropType<T['type']>,
+            boolean | string | number | false | true | null
+          >]: DocumentationLabels & {
+            type: string[];
+            description: string;
+          } & (K extends RequiredKeys<
+              Exclude<
+                InferPropType<T['type']>,
+                boolean | string | number | false | true | null
+              >
+            >
+              ? { required: true }
+              : {});
+        }
+  >;
+};
+
+export type PropDocumentation<T extends Prop> = {
+  type: string[];
+  description: string;
+} & (T['required'] extends true ? { required: true } : {}) &
+  DocumentationLabels &
+  (T['_verbose'] extends true
+    ? {
+        nested: NestedPropDocumentation<T>;
+      }
+    : T['_verbose'] extends false
+    ? {}
+    : T['type'] extends PropType<Array<any>> | PropType<Record<any, any>>
+    ? {
+        nested: NestedPropDocumentation<T>;
+      }
+    : {}) &
+  (T['_preset'] extends true ? { default: InferPropType<T['type']> } : {});
+
+interface SlotDocumentation<T extends Slot> extends DocumentationLabels {
+  description: string;
+  properties: {
+    [K in keyof T['properties']]: {
+      type: string[];
+      description: string;
+      // arguments: T['properties'][K] extends (...args: any[]) => any
+      //   ? Parameters<T['properties'][K]>
+      //   : undefined;
+    };
+  };
 }
+
+interface EmitDocumentation extends DocumentationLabels {
+  description: string;
+  properties: {
+    [key: string]: {
+      type: string[];
+      description: string;
+    };
+  };
+}
+
+export interface Documentation<T extends ComponentConfiguration> {
+  props: {
+    [K in keyof T['props']]: PropDocumentation<T['props'][K]>;
+  };
+  slots: {
+    [K in keyof T['slots']]: SlotDocumentation<T['slots'][K]>;
+  };
+  emits: {
+    [K in keyof T['emits']]: EmitDocumentation;
+  };
+  style: T['style'];
+}
+
+// Same as ComponentConfiguration, but without style.
+export type ComposableDocumentation<T extends ComposableConfiguration> = {
+  props: {
+    [K in keyof T['props']]: Omit<PropDocumentation<T['props'][K]>, 'default'>;
+  };
+  slots: {
+    [K in keyof T['slots']]: SlotDocumentation<T['slots'][K]>;
+  };
+  emits: {
+    [K in keyof T['emits']]: EmitDocumentation;
+  };
+};

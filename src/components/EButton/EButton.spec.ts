@@ -1,70 +1,93 @@
 import { mount } from '@vue/test-utils';
-import { expect, test } from 'vitest';
-import { EButton } from '~/index';
+import { describe, expect, test } from 'vitest';
+import { config } from '~/common/config';
+import { useTheme } from '~/composables/useTheme';
+import { EButton, ELoading } from '~/index';
 
-test('mount component', async () => {
-  expect(EButton).toBeTruthy();
-
-  const wrapper = mount(EButton, {
-    props: {
-      id: 'id',
-    },
+describe('EButton', () => {
+  test('is a valid Vue instance', () => {
+    const component = mount(EButton);
+    expect(component.vm).toBeTruthy();
   });
 
-  expect(wrapper.html()).toMatchSnapshot();
-  expect(wrapper.html()).toContain('EButton EButton--md EButton--primary');
-});
+  test('renders correctly', () => {
+    const component = mount(EButton, { slots: { default: 'Button Content' } });
 
-test('register css variables', async () => {
-  mount(EButton);
-  expect(
-    document.getElementById('EThemeProvider--global')!.innerText
-  ).toContain('EButton');
-});
+    expect(component.classes()).toContain('EButton');
+    expect(component.classes()).toContain('EButton--primary');
 
-test('variant', async () => {
-  const component = mount(EButton, {
-    props: {
-      id: 'id',
-      variant: 'secondary',
-    },
+    expect(component.find('.EButton-content').exists()).toBe(true);
+    expect(component.text()).toContain('Button Content');
   });
 
-  expect(component.html()).toMatchSnapshot();
-  expect(component.html()).toContain('EButton--secondary');
+  test('generates a random id if none is provided', () => {
+    const component = mount(EButton);
 
-  await component.setProps({ variant: 'error' });
-  expect(component.html()).toContain('EButton--error');
-});
-
-test('disabled', async () => {
-  const component = mount(EButton, { props: { id: 'button' } });
-
-  expect(component.html()).not.toContain('disabled');
-
-  await component.setProps({ disabled: true });
-  expect(component.html()).toMatchSnapshot();
-  expect(component.html()).toContain('disabled');
-});
-
-test('link types', async () => {
-  const component = mount(EButton, {
-    props: { id: 'button', href: '/', tag: 'a' },
+    expect(component.attributes('id')).toBeDefined();
   });
-  expect(component.html()).toMatchSnapshot();
-});
 
-test('loading', async () => {
-  const component = mount(EButton, {
-    props: { loading: true },
-  });
-  expect(component.html()).toContain('ELoading--inherit');
-});
+  test('uses specific id if provided', () => {
+    const component = mount(EButton, { props: { id: 'id' } });
 
-test('inherit attributes', async () => {
-  const component = mount(EButton, {
-    props: { notaprop: '1', variant: 'primary' },
+    expect(component.attributes('id')).toEqual('id');
   });
-  expect(component.html()).toContain('notaprop="1"');
-  expect(component.html()).not.toContain('variant="primary"');
+
+  test('renders with the correct type', () => {
+    expect(mount(EButton).attributes('type')).toEqual(undefined);
+    expect(
+      mount(EButton, { props: { type: 'button' } }).attributes('type'),
+    ).toEqual('button');
+    expect(
+      mount(EButton, { props: { type: 'submit' } }).attributes('type'),
+    ).toEqual('submit');
+  });
+
+  test('renders with the correct tag', () => {
+    expect(mount(EButton).element.tagName).toBe('BUTTON');
+    expect(mount(EButton, { props: { tag: 'a' } }).element.tagName).toBe('A');
+  });
+
+  test('renders with the loading component', () => {
+    const component = mount(EButton, { props: { loading: true } });
+    expect(component.getComponent(ELoading)).toBeTruthy();
+  });
+
+  test('registers css variables', async () => {
+    useTheme(config).components.value = {}; // Reset variables.
+
+    mount(EButton);
+
+    const style = document.getElementById('__ElementsTheme');
+    expect(style).toBeDefined();
+    expect(style!.innerText).toContain('EButton');
+  });
+
+  test('renders as disabled', async () => {
+    const component = mount(EButton, { props: { disabled: true } });
+
+    expect(component.attributes('disabled')).toBeDefined();
+  });
+
+  test('renders with icon', async () => {
+    const component = mount(EButton, { props: { icon: 'box' } });
+
+    expect(component.html()).toContain('EIcon');
+
+    // 'icon' is an alias for 'iconLeft'.
+    expect(component.html()).toContain('EButton--icon-left');
+  });
+
+  test('renders with left icon', async () => {
+    const component = mount(EButton, { props: { iconLeft: 'box' } });
+
+    expect(component.html()).toContain('EIcon');
+    expect(component.html()).toContain('EButton--icon-left');
+  });
+
+  test('renders with right icon', async () => {
+    const component = mount(EButton, { props: { iconRight: 'box' } });
+
+    expect(component.html()).toContain('EIcon');
+    expect(component.html()).toContain('EButton--icon-right');
+  });
 });

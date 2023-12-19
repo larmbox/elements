@@ -1,7 +1,6 @@
-$e-prefix: '' !default;
-$e-screen-reader-class: '#{$e-prefix}sr' !default;
+$prefix: '' !default;
 
-$e-components: (
+$components: (
   'EButton': 'EButton',
   'ECheckbox': 'ECheckbox',
   'EIcon': 'EIcon',
@@ -14,6 +13,12 @@ $e-components: (
   'ETextarea': 'ETextarea',
   'ETooltip': 'ETooltip',
   'EFormControl': 'EFormControl',
+  'EFormInput': 'EFormInput',
+  'EFormInputField': 'EFormInputField',
+  'EFormLabel': 'EFormLabel',
+  'EFormDescription': 'EFormDescription',
+  'EFormHint': 'EFormHint',
+  'EFormFeedback': 'EFormFeedback',
 ) !default;
 
-$e-palettes: ('primary', 'secondary', 'error', 'success') !default;
+$variants: ('primary', 'secondary') !default;

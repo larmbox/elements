@@ -1,18 +1,4 @@
-export enum Size {
-  SMALL = 'sm',
-  DEFAULT = 'md',
-  LARGE = 'lg',
-}
-
-export enum Variant {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  ERROR = 'error',
-  SUCCESS = 'success',
-}
-
 export enum ComponentName {
-  EThemeProvider = 'EThemeProvider',
   EButton = 'EButton',
   ECheckbox = 'ECheckbox',
   EIcon = 'EIcon',
@@ -24,5 +10,11 @@ export enum ComponentName {
   ESwitch = 'ESwitch',
   ETextarea = 'ETextarea',
   ETooltip = 'ETooltip',
-  EFormControl = 'EFormControl',
+  EFormInput = 'EFormInput',
+  EFormInputField = 'EFormInputField',
+  EFormLabel = 'EFormLabel',
+  EFormDescription = 'EFormDescription',
+  EFormHint = 'EFormHint',
+  EFormFeedback = 'EFormFeedback',
+  EThemeProvider = 'EThemeProvider',
 }

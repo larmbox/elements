@@ -1,103 +1,84 @@
 @use 'sass:math';
 @import '../../theme/imports';
 
-@mixin checkbox-highlight($color) {
-  .#{c('ECheckbox') + e('box')} {
-    border-color: color($color, 8);
-  }
-  input:disabled .#{c('ECheckbox') + e('box')} {
-    border-color: color($color, 3);
-  }
-}
+$form: c('EFormInput');
+$component: c('ECheckbox');
 
-@mixin checkbox-size($suffix, $size) {
-  &.#{c('ECheckbox') + m($suffix)} {
-    .#{c('ECheckbox') + e('inner')} .#{c('ECheckbox') + e('context')} {
-      margin-left: calc($size + v(spacing-xs));
-    }
-
-    .#{c('ECheckbox') + e('box')} {
-      width: $size;
-      height: $size;
-      font-size: $size;
-    }
-
-    input {
-      width: $size;
-      height: $size;
-    }
-  }
-}
-
-@mixin checkbox-color($color) {
-  &.#{c('ECheckbox') + m('highlight')} {
-    @include checkbox-highlight($color);
-  }
-
-  input {
-    &:checked {
-      + .#{c('ECheckbox') + e('box')} {
-        background-color: color($color, 8);
-        border-color: color($color, 9);
-        color: v(contrast-color);
+@mixin variants {
+  @each $variant in $variants {
+    &.#{$component}--#{$variant} {
+      &.#{$form}--highlight {
+        input + .#{$component}-target {
+          border-color: variant($variant, border-color);
+        }
       }
-    }
 
-    &:focus {
-      + .#{c('ECheckbox') + e('box')} {
-        border-color: color($color, 8);
-        box-shadow: 0 0 0 v(focus-shadow-size, c('ECheckbox'))
-          color($color, 'T20');
-      }
-    }
+      input {
+        &:checked + .#{$component}-target {
+          background-color: variant($variant, background-color);
+          border-color: variant($variant, border-color);
+          color: variant($variant, contrast-color);
+        }
 
-    &:disabled:checked {
-      + .#{c('ECheckbox') + e('box')} {
-        border-color: color($color, 5);
-        background-color: color($color, 4);
-        color: v(contrast-color--disabled);
-      }
-    }
+        &:focus + .#{$component}-target {
+          border-color: variant($variant, border-color, focus);
+          box-shadow: 0
+            0
+            0
+            v(focus-shadow-size)
+            variant($variant, box-shadow-color);
+        }
 
-    &:disabled:not(:checked) {
-      + .#{c('ECheckbox') + e('box')} {
-        background-color: v(background-color--disabled);
+        &:disabled:checked + .#{$component}-target {
+          background-color: variant($variant, background-color, disabled);
+          border-color: variant($variant, border-color, disabled);
+          color: variant($variant, contrast-color, disabled);
+        }
       }
     }
   }
 }
 
-.#{c('ECheckbox')} {
+.#{$component} {
   display: inline-flex;
   position: relative;
   align-items: center;
 
   // https://stackoverflow.com/questions/48117071/element-with-display-inline-flex-has-a-strange-top-margin
   vertical-align: middle;
+  line-height: v(line-height, $component);
 
-  &.#{c('ECheckbox') + m('block')} {
-    width: 100%;
+  @include variants;
+
+  &.#{$component}--block {
     display: flex;
+    width: 100%;
   }
 
-  .#{c('ECheckbox') + e('box')} {
-    flex-shrink: 0;
+  .#{$component}-target {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: v(border-width, c('ECheckbox')) solid
-      v(border-color, c('ECheckbox'));
-    background-color: v(background-color);
-    border-radius: v(border-radius, c('ECheckbox'));
-    box-shadow: 0 0 0 v(focus-shadow-size) transparent;
-    line-height: v(line-height, c('ECheckbox'));
-    transition: border-color v(transition-time) v(transition-type),
+    flex-shrink: 0;
+
+    width: v(size, $component);
+    height: v(size, $component);
+    font-size: v(size, $component);
+
+    background-color: v(background-color, $component);
+    border: v(border-width, $component) solid v(border-color, $component);
+    border-radius: v(border-radius, $component);
+
+    line-height: v(line-height, $component);
+    color: transparent;
+
+    transition:
+      border-color v(transition-time) v(transition-type),
       background-color v(transition-time) v(transition-type),
       box-shadow v(transition-time) v(transition-type);
 
-    color: transparent;
-
-    .#{c('ECheckbox') + e('icon')} {
+    .#{$component}-icon {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -105,53 +86,62 @@
     }
   }
 
-  .#{c('ECheckbox') + e('inner')} {
+  .#{$component}-inner {
     > div:first-of-type {
       display: flex;
-      align-items: center;
 
-      .#{c('EFormControl') + e('label')} {
+      .#{c('EFormLabel')} {
         display: block;
-        margin-bottom: 0;
+        padding-bottom: 0;
         padding-left: v(spacing-xs);
+
+        // Aligns the first line of the label with the checkbox target.
+        margin-top: calc(
+          (v(line-height, $component) * 1em - v(size, $component)) / 2 * -1
+        );
       }
+    }
+
+    .#{$component}-context {
+      margin-left: calc(v(size, $component) + v(spacing-xs));
     }
   }
 
   input {
     position: absolute;
+    width: v(size, $component);
+    height: v(size, $component);
     margin: 0;
     opacity: 0;
     z-index: 1;
-  }
 
-  @mixin checkbox-variant($variant) {
-    &.#{c('ECheckbox') + m($variant)} {
-      @include checkbox-color($variant);
+    &:disabled:not(:checked) + .#{$component}-target {
+      background-color: v(background-color--disabled, $component);
+      border-color: v(border-color--disabled, $component);
     }
   }
 
-  @each $variant in $e-palettes {
-    @include checkbox-variant($variant);
-  }
+  &.#{$form}--highlight.#{$form}--feedback {
+    input {
+      &:not(:checked) + .#{$component}-target {
+        border-color: variant(feedback, border-color);
+      }
 
-  &.#{c('ECheckbox') + m('feedback-error')} {
-    @include checkbox-color('error');
+      &:not(:checked):not(:disabled):not(:focus):hover + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
 
-    &.#{c('ECheckbox') + m('highlight')} {
-      @include checkbox-highlight('error');
+      &:not(:checked):not(:disabled):active + .#{$component}-target {
+        border-color: variant(feedback, border-color, active);
+      }
+
+      &:not(:checked):focus + .#{$component}-target {
+        border-color: variant(feedback, border-color, hover);
+      }
+
+      &:not(:checked):disabled + .#{$component}-target {
+        border-color: variant(feedback, border-color, disabled);
+      }
     }
   }
-
-  &.#{c('ECheckbox') + m('feedback-success')} {
-    @include checkbox-color('success');
-
-    &.#{c('ECheckbox') + m('highlight')} {
-      @include checkbox-highlight('success');
-    }
-  }
-
-  @include checkbox-size('md', v(size, c('ECheckbox')));
-  @include checkbox-size('sm', v(size-sm, c('ECheckbox')));
-  @include checkbox-size('lg', v(size-lg, c('ECheckbox')));
 }

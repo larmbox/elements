@@ -1,7 +1,3 @@
-/**
- * export { default } from './auto-import';
- * @see https://github.com/vuejs/vue-next/issues/2860
- */
 export { ComponentName as Component } from './common/enums';
 export * from './components';
 export { useElements } from './composables/useElements';

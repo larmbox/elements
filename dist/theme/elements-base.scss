@@ -1,3 +1,10 @@
 @import 'imports';
 @import 'screenreader';
 @import 'body';
+
+[data-focus-target='true'] {
+  outline: none;
+  border: none;
+  height: 0;
+  width: 0;
+}

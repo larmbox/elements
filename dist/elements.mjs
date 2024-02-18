@@ -3623,11 +3623,13 @@ const Ue = {
     }), e.app.mount(o), o.children[0].appendChild(e);
   },
   unmounted(e) {
-    e.app.unmount();
+    e && e.app && e.app.unmount();
   },
   updated(e, t) {
-    const o = typeof t.value == "object" ? t.value : { text: t.value };
-    e.binding.value = o;
+    if (e) {
+      const o = typeof t.value == "object" ? t.value : { text: t.value };
+      e.binding.value = o;
+    }
   }
 }, ir = "0.1.0";
 function gr(e = {}) {

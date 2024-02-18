@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "build": "npm run install && npm run lint:fix && npm run test && npm run build:dangerous",
+    "build": "npm install && npm run lint:fix && npm run test && npm run build:dangerous",
     "build:dangerous": "npm run build:before && npm run build:vite && npm run build:types && npm run build:after",
     "build:before": "tsx --tsconfig tsconfig.build.json scripts/prebuild.ts",
     "build:after": "tsx --tsconfig tsconfig.build.json -r tsconfig-paths/register scripts/postbuild.ts",

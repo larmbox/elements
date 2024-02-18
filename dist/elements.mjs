@@ -3626,12 +3626,12 @@ const Ue = {
     e && e.app && e.app.unmount();
   },
   updated(e, t) {
-    if (e) {
+    if (e && e.app) {
       const o = typeof t.value == "object" ? t.value : { text: t.value };
       e.binding.value = o;
     }
   }
-}, ir = "0.1.1";
+}, ir = "0.1.2";
 function gr(e = {}) {
   const t = e.components || [], o = [];
   V(e, !0);

@@ -30,7 +30,7 @@ const EVModalOpen: Directive<
     element.addEventListener('click', element._click);
   },
   unmounted(element) {
-    element.removeEventListener('click', element._click);
+    if (element) element.removeEventListener('click', element._click);
   },
 };
 
@@ -40,7 +40,7 @@ const EVModalClose: Directive<Element, string> = {
     element.addEventListener('click', element._click);
   },
   unmounted(element) {
-    element.removeEventListener('click', element._click);
+    if (element) element.removeEventListener('click', element._click);
   },
 };
 
@@ -50,7 +50,7 @@ const EVModalCloseAll: Directive<Element, void> = {
     element.addEventListener('click', element._click);
   },
   unmounted(element) {
-    element.removeEventListener('click', element._click);
+    if (element) element.removeEventListener('click', element._click);
   },
 };
 

@@ -3593,21 +3593,21 @@ const Ue = {
     }, e.addEventListener("click", e._click);
   },
   unmounted(e) {
-    e.removeEventListener("click", e._click);
+    e && e.removeEventListener("click", e._click);
   }
 }, rr = {
   mounted(e, t) {
     e._click = () => me().modal.close(t.value), e.addEventListener("click", e._click);
   },
   unmounted(e) {
-    e.removeEventListener("click", e._click);
+    e && e.removeEventListener("click", e._click);
   }
 }, nr = {
   mounted(e) {
     e._click = me().modal.closeAll, e.addEventListener("click", e._click);
   },
   unmounted(e) {
-    e.removeEventListener("click", e._click);
+    e && e.removeEventListener("click", e._click);
   }
 }, ar = {
   mounted(e, t) {
@@ -3631,7 +3631,7 @@ const Ue = {
       e.binding.value = o;
     }
   }
-}, ir = "0.1.0";
+}, ir = "0.1.1";
 function gr(e = {}) {
   const t = e.components || [], o = [];
   V(e, !0);

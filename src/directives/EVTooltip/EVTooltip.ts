@@ -36,14 +36,20 @@ const EVTooltip: Directive<
     wrapper.children[0].appendChild(element);
   },
   unmounted(element) {
-    element.app.unmount();
+    // Element can be undefined if the element was removed from the DOM before
+    // the directive was unmounted.
+    if (element && element.app) element.app.unmount();
   },
   updated(element, binding) {
-    const props =
-      typeof binding.value === 'object'
-        ? binding.value
-        : { text: binding.value };
-    element.binding.value = props;
+    // Element can be undefined if the element was removed from the DOM before
+    // the directive was unmounted.
+    if (element && element.app) {
+      const props =
+        typeof binding.value === 'object'
+          ? binding.value
+          : { text: binding.value };
+      element.binding.value = props;
+    }
   },
 };
 

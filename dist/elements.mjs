@@ -1,4 +1,4 @@
-import { ref as B, watch as Q, computed as F, useAttrs as Pt, useSlots as Zt, getCurrentInstance as eo, Comment as to, defineComponent as D, createVNode as m, mergeProps as R, onMounted as Je, onUnmounted as at, nextTick as Ct, onBeforeUnmount as oo, Teleport as qt, onUpdated as ro, unref as ce, shallowRef as no, getCurrentScope as ao, onScopeDispose as io, shallowReadonly as le, Fragment as lo, Transition as so, createApp as co } from "vue";
+import { ref as B, watch as Q, computed as F, useAttrs as Pt, useSlots as Zt, getCurrentInstance as eo, Comment as to, defineComponent as D, createVNode as m, mergeProps as R, onMounted as Je, onUnmounted as at, nextTick as Ct, onBeforeUnmount as oo, Teleport as Vt, onUpdated as ro, unref as ce, shallowRef as no, getCurrentScope as ao, onScopeDispose as io, shallowReadonly as le, Fragment as lo, Transition as so, createApp as co } from "vue";
 var E = /* @__PURE__ */ ((e) => (e.EButton = "EButton", e.ECheckbox = "ECheckbox", e.EIcon = "EIcon", e.EInput = "EInput", e.ELoading = "ELoading", e.EModal = "EModal", e.ERadio = "ERadio", e.ESelect = "ESelect", e.ESwitch = "ESwitch", e.ETextarea = "ETextarea", e.ETooltip = "ETooltip", e.EFormInput = "EFormInput", e.EFormInputField = "EFormInputField", e.EFormLabel = "EFormLabel", e.EFormDescription = "EFormDescription", e.EFormHint = "EFormHint", e.EFormFeedback = "EFormFeedback", e.EThemeProvider = "EThemeProvider", e))(E || {});
 const M = {
   props: {
@@ -139,9 +139,9 @@ function fo() {
   let e = document.getElementById(ue);
   e || (e = document.createElement("div"), e.id = ue, document.body.appendChild(e));
 }
-function Vt(e, t) {
+function qt(e, t) {
   const o = (l) => Lt(t[l]) && e[l] && Lt(e[l]), r = Object.getOwnPropertyNames(t).map((l) => ({
-    [l]: o(l) ? Vt(e[l], t[l]) : t[l]
+    [l]: o(l) ? qt(e[l], t[l]) : t[l]
   })).reduce((l, n) => ({ ...l, ...n }), {});
   return {
     ...e,
@@ -339,7 +339,7 @@ const se = 1, Rt = {
 };
 let tt;
 function mo(e) {
-  const t = B(Vt(uo, (e == null ? void 0 : e.config) || {})), o = po(t.value), r = vo(t.value);
+  const t = B(qt(uo, (e == null ? void 0 : e.config) || {})), o = po(t.value), r = vo(t.value);
   return fo(), {
     config: t,
     uuid: () => "L" + (Math.random().toString(36) + "00000000000000000").slice(2, 9),
@@ -347,11 +347,11 @@ function mo(e) {
     theming: r
   };
 }
-function V(e, t = !1) {
+function q(e, t = !1) {
   return (!tt || t) && (tt = mo(e)), tt;
 }
 function me() {
-  const { modal: e, uuid: t, theming: o, config: r } = V();
+  const { modal: e, uuid: t, theming: o, config: r } = q();
   return {
     config: r,
     uuid: t,
@@ -402,7 +402,7 @@ const L = {
   emits: {}
 };
 function _(e) {
-  const t = Pt(), o = Zt(), { config: r } = V(), l = eo(), n = (p) => {
+  const t = Pt(), o = Zt(), { config: r } = q(), l = eo(), n = (p) => {
     l.render = p;
   }, a = (...p) => p.find((y) => y !== void 0), i = (p, y = "", f, s = !0) => {
     const v = (d) => `${s ? r.value.prefix : ""}${f || (e == null ? void 0 : e.name)}${y}${d}`, h = {};
@@ -470,7 +470,7 @@ function _(e) {
     render: n
   };
 }
-const q = {
+const V = {
   props: {
     disabled: {
       type: Boolean,
@@ -589,7 +589,7 @@ const q = {
       theming: {
         registerComponentStyle: n
       }
-    } = V();
+    } = q();
     n(t.name, t.style);
     const a = t.props;
     l(() => a.value.type === "inline" ? m(a.value.tag, R({
@@ -656,7 +656,7 @@ const Le = {
       theming: {
         registerComponentStyle: a
       }
-    } = V();
+    } = q();
     a(o.name, o.style);
     const i = o.props;
     l(() => m("div", R({
@@ -672,7 +672,7 @@ const Le = {
   props: {
     ...L.props,
     ...M.props,
-    ...q.props,
+    ...V.props,
     ...Ot.props,
     ...$.props,
     variant: {
@@ -703,7 +703,7 @@ const Le = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...Ot.emits,
     ...$.emits
   },
@@ -735,7 +735,7 @@ const Le = {
       theming: {
         registerComponentStyle: a
       }
-    } = V(), i = t.props;
+    } = q(), i = t.props;
     a(t.name, t.style), n(() => m(i.value.tag, R({
       id: t.id.value,
       type: i.value.type,
@@ -1067,7 +1067,7 @@ const te = {
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...te.props,
     ...$.props,
     variant: {
@@ -1102,7 +1102,7 @@ const te = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...te.emits,
     ...$.emits
   },
@@ -1142,7 +1142,7 @@ const te = {
       theming: {
         registerComponentStyle: s
       }
-    } = V();
+    } = q();
     s(o.name, o.style);
     const v = o.props, h = (d) => {
       t("input", d), t("update:modelValue", d.target.checked);
@@ -1296,7 +1296,7 @@ const te = {
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...fe.props,
     ...$.props,
     variant: {
@@ -1339,7 +1339,7 @@ const te = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...fe.emits,
     ...$.emits
   },
@@ -1384,7 +1384,7 @@ const te = {
       theming: {
         registerComponentStyle: f
       }
-    } = V();
+    } = q();
     f(o.name, o.style);
     const s = o.props, v = (h) => {
       t("input", h), t("update:modelValue", h.target.value);
@@ -1569,7 +1569,7 @@ const $t = {
     "description-text-color": "var(--text-color--light)",
     "description-font-size": "var(--font-size-sm)"
   }
-}, qe = ue, ur = /* @__PURE__ */ D({
+}, Ve = ue, ur = /* @__PURE__ */ D({
   name: Pe.name,
   props: Pe.props,
   emits: Pe.emits,
@@ -1589,7 +1589,7 @@ const $t = {
       theming: {
         registerComponentStyle: y
       }
-    } = V();
+    } = q();
     y(o.name, o.style);
     const f = c.value.id || g(), s = {
       body: g(),
@@ -1604,8 +1604,8 @@ const $t = {
     }, O = () => {
       if (jt())
         return;
-      const A = "outside", C = document.getElementById(qe);
-      w = document.getElementById(`${qe}-${A}`), !w && C && (w = document.createElement("div"), w.id = `${qe}-${A}`, w.className = r.element(A), C.appendChild(w));
+      const A = "outside", C = document.getElementById(Ve);
+      w = document.getElementById(`${Ve}-${A}`), !w && C && (w = document.createElement("div"), w.id = `${Ve}-${A}`, w.className = r.element(A), C.appendChild(w));
     };
     Je(() => {
       O(), v.value = !0;
@@ -1650,8 +1650,8 @@ const $t = {
         C.classList.remove(A);
       }, 500));
     }, H = K;
-    a(() => v.value ? m(qt, {
-      to: `#${qe}`
+    a(() => v.value ? m(Vt, {
+      to: `#${Ve}`
     }, {
       default: () => {
         var A, C, J, xe, pt, vt, mt, bt, gt, ht, yt, xt, wt, Et, kt, St, At, Tt;
@@ -1729,12 +1729,12 @@ const $t = {
       }
     }) : m("div", null, null));
   }
-}), Ve = {
+}), qe = {
   name: E.ERadio,
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...te.props,
     ...$.props,
     variant: {
@@ -1757,7 +1757,7 @@ const $t = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...te.emits,
     ...$.emits
   },
@@ -1773,14 +1773,14 @@ const $t = {
     "background-color--disabled": "var(--background-color--disabled)"
   }
 }, fr = /* @__PURE__ */ D({
-  name: Ve.name,
-  props: Ve.props,
-  emits: Ve.emits,
+  name: qe.name,
+  props: qe.props,
+  emits: qe.emits,
   inheritAttrs: !1,
   setup(e, {
     emit: t
   }) {
-    const o = z(Ve, e), {
+    const o = z(qe, e), {
       css: r,
       attrs: l,
       slot: n,
@@ -1797,7 +1797,7 @@ const $t = {
       theming: {
         registerComponentStyle: s
       }
-    } = V();
+    } = q();
     s(o.name, o.style);
     const v = o.props, h = (d) => {
       t("input", d), t("update:modelValue", d.target.checked);
@@ -1868,7 +1868,7 @@ const $t = {
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...fe.props,
     ...$.props,
     variant: {
@@ -1895,7 +1895,7 @@ const $t = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...fe.emits,
     ...$.emits
   },
@@ -1940,7 +1940,7 @@ const $t = {
       theming: {
         registerComponentStyle: f
       }
-    } = V();
+    } = q();
     f(o.name, o.style);
     const s = o.props, v = (d) => {
       const b = d.target;
@@ -2001,11 +2001,15 @@ const $t = {
         value: d,
         label: b,
         disabled: S
-      }, k) => m("option", {
-        key: k,
-        value: h(d),
-        disabled: S
-      }, [b]))]), m(X, {
+      }, k) => {
+        const T = i(s.value.modelValue, s.value.value) === h(d);
+        return m("option", {
+          key: k,
+          value: h(d),
+          disabled: S,
+          selected: T
+        }, [b]);
+      })]), m(X, {
         icon: s.value.icon,
         class: r.element("icon")
       }, null)])]), (n.active("feedback") || s.value.feedback) && m(he, {
@@ -2033,7 +2037,7 @@ const $t = {
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...te.props,
     ...$.props,
     variant: {
@@ -2064,7 +2068,7 @@ const $t = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...te.emits,
     ...$.emits
   },
@@ -2105,7 +2109,7 @@ const $t = {
       theming: {
         registerComponentStyle: s
       }
-    } = V();
+    } = q();
     s(o.name, o.style);
     const v = o.props, h = (d) => {
       t("input", d), t("update:modelValue", d.target.checked);
@@ -2182,7 +2186,7 @@ const $t = {
   props: {
     ...M.props,
     ...L.props,
-    ...q.props,
+    ...V.props,
     ...fe.props,
     ...$.props,
     variant: {
@@ -2221,7 +2225,7 @@ const $t = {
   emits: {
     ...M.emits,
     ...L.emits,
-    ...q.emits,
+    ...V.emits,
     ...fe.emits,
     ...$.emits
   },
@@ -2266,7 +2270,7 @@ const $t = {
       theming: {
         registerComponentStyle: f
       }
-    } = V();
+    } = q();
     f(o.name, o.style);
     const s = o.props, v = (h) => {
       t("input", h), t("update:modelValue", h.target.value);
@@ -2380,7 +2384,7 @@ const $t = {
         render: i,
         destroy: u
       }
-    } = V(), c = t.props, g = c.value.global ? "global" : n(), p = () => {
+    } = q(), c = t.props, g = c.value.global ? "global" : n(), p = () => {
       c.value.theme && (a({
         name: c.value.theme.name,
         variables: c.value.theme.variables
@@ -3033,7 +3037,7 @@ function Po(e) {
 function Gt(e) {
   return ie(ee(e)).left + et(e).scrollLeft;
 }
-function qo(e) {
+function Vo(e) {
   const t = ee(e), o = et(e), r = e.ownerDocument.body, l = ne(t.scrollWidth, t.clientWidth, r.scrollWidth, r.clientWidth), n = ne(t.scrollHeight, t.clientHeight, r.scrollHeight, r.clientHeight);
   let a = -o.scrollLeft + Gt(e);
   const i = -o.scrollTop;
@@ -3044,7 +3048,7 @@ function qo(e) {
     y: i
   };
 }
-function Vo(e, t) {
+function qo(e, t) {
   const o = N(e), r = ee(e), l = o.visualViewport;
   let n = r.clientWidth, a = r.clientHeight, i = 0, u = 0;
   if (l) {
@@ -3071,9 +3075,9 @@ function jo(e, t) {
 function _t(e, t, o) {
   let r;
   if (t === "viewport")
-    r = Vo(e, o);
+    r = qo(e, o);
   else if (t === "document")
-    r = qo(ee(e));
+    r = Vo(ee(e));
   else if (Z(t))
     r = jo(t, o);
   else {
@@ -3385,7 +3389,7 @@ const Ue = {
   name: E.ETooltip,
   props: {
     ...L.props,
-    ...q.props,
+    ...V.props,
     placement: {
       type: String,
       _preset: !0
@@ -3465,7 +3469,7 @@ const Ue = {
       theming: {
         registerComponentStyle: a
       }
-    } = V();
+    } = q();
     a(t.name, t.style);
     const i = F(() => t.props.value.binding ? {
       ...t.props.value,
@@ -3553,7 +3557,7 @@ const Ue = {
         class: o.element("trigger")
       }, r), [(x = (w = l.node).reference) == null ? void 0 : x.call(w, {
         id: t.id.value
-      })]), m(qt, {
+      })]), m(Vt, {
         to: `#${er}`
       }, {
         default: () => [m(so, {
@@ -3631,10 +3635,10 @@ const Ue = {
       e.binding.value = o;
     }
   }
-}, ir = "0.1.3";
+}, ir = "0.1.4";
 function gr(e = {}) {
   const t = e.components || [], o = [];
-  V(e, !0);
+  q(e, !0);
   function r(a, i, u) {
     a.component(i) || a.component(i, u);
   }

@@ -211,11 +211,21 @@ const ESelect = defineComponent({
               {...attrs}
             >
               {(props.value.options || []).map(
-                ({ value, label, disabled }, i) => (
-                  <option key={i} value={toValue(value)} disabled={disabled}>
-                    {label}
-                  </option>
-                ),
+                ({ value, label, disabled }, i) => {
+                  const selected =
+                    first(props.value.modelValue, props.value.value) ===
+                    toValue(value);
+                  return (
+                    <option
+                      key={i}
+                      value={toValue(value)}
+                      disabled={disabled}
+                      selected={selected}
+                    >
+                      {label}
+                    </option>
+                  );
+                },
               )}
             </select>
             <EIcon icon={props.value.icon} class={css.element('icon')} />

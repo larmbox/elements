@@ -463,6 +463,7 @@ export declare function _useElements(options?: CreateOptions, teardown?: boolean
                 style?: Partial<{}> | undefined;
             };
         };
+        generateId?: (() => string) | undefined;
     }>;
     uuid: () => string;
     modal: {
@@ -953,6 +954,7 @@ export declare function useElements(): {
                 style?: Partial<{}> | undefined;
             };
         };
+        generateId?: (() => string) | undefined;
     }>;
     uuid: () => string;
     modal: {

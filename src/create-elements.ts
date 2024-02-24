@@ -28,6 +28,12 @@ export interface Config {
    * Configuration of components.
    */
   components: Components;
+  /**
+   * Custom function to generate unique IDs for elements.
+   * Set to `false` to disable automatic ID generation.
+   * If `true`, Elements will generate random IDs. Defaults to `true`.
+   */
+  generateId?: () => string;
 }
 
 export interface UserConfig extends Omit<Config, 'components'> {

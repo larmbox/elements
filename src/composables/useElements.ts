@@ -24,6 +24,7 @@ function create(options?: CreateOptions) {
    * is required.
    */
   const uuid = () => {
+    if (config.value.generateId) return config.value.generateId();
     return 'L' + (Math.random().toString(36) + '00000000000000000').slice(2, 9);
   };
 

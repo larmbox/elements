@@ -1,6 +1,6 @@
 {
   "name": "@larmbox/elements",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Larmbox Elements is a Vue 3 component library.",
   "license": "MIT",
   "type": "module",

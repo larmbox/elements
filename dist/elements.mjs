@@ -342,7 +342,7 @@ function mo(e) {
   const t = B(qt(uo, (e == null ? void 0 : e.config) || {})), o = po(t.value), r = vo(t.value);
   return fo(), {
     config: t,
-    uuid: () => "L" + (Math.random().toString(36) + "00000000000000000").slice(2, 9),
+    uuid: () => t.value.generateId ? t.value.generateId() : "L" + (Math.random().toString(36) + "00000000000000000").slice(2, 9),
     modal: o,
     theming: r
   };
@@ -526,7 +526,7 @@ const V = {
     }
   },
   emits: {}
-}, $ = {
+}, I = {
   props: {
     variant: {
       type: String
@@ -674,9 +674,9 @@ const Le = {
     ...M.props,
     ...V.props,
     ...Ot.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     tag: {
@@ -705,7 +705,7 @@ const Le = {
     ...L.emits,
     ...V.emits,
     ...Ot.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     "padding-x": "calc(var(--spacing) * 0.75)",
@@ -967,7 +967,7 @@ const te = {
       }, r), [(u = (i = l.node).default) == null ? void 0 : u.call(i, {})]);
     });
   }
-}), $e = {
+}), Ie = {
   name: E.EFormInput,
   props: {
     ...L.props,
@@ -983,12 +983,12 @@ const te = {
   emits: {},
   style: {}
 }, we = /* @__PURE__ */ D({
-  name: $e.name,
-  props: $e.props,
-  emits: $e.emits,
+  name: Ie.name,
+  props: Ie.props,
+  emits: Ie.emits,
   inheritAttrs: !1,
   setup(e) {
-    const t = z($e, e), {
+    const t = z(Ie, e), {
       css: o,
       attrs: r,
       slot: l,
@@ -1004,7 +1004,7 @@ const te = {
       }, r), [(u = (i = l.node).default) == null ? void 0 : u.call(i, {})]);
     });
   }
-}), Ie = {
+}), $e = {
   name: E.EFormLabel,
   props: {
     ...L.props,
@@ -1035,12 +1035,12 @@ const te = {
   emits: {},
   style: {}
 }, ye = /* @__PURE__ */ D({
-  name: Ie.name,
-  props: Ie.props,
-  emits: Ie.emits,
+  name: $e.name,
+  props: $e.props,
+  emits: $e.emits,
   inheritAttrs: !1,
   setup(e) {
-    const t = z(Ie, e), {
+    const t = z($e, e), {
       css: o,
       attrs: r,
       slot: l,
@@ -1069,9 +1069,9 @@ const te = {
     ...L.props,
     ...V.props,
     ...te.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     indeterminate: {
@@ -1104,7 +1104,7 @@ const te = {
     ...L.emits,
     ...V.emits,
     ...te.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     size: "1.5rem",
@@ -1298,9 +1298,9 @@ const te = {
     ...L.props,
     ...V.props,
     ...fe.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     type: {
@@ -1341,7 +1341,7 @@ const te = {
     ...L.emits,
     ...V.emits,
     ...fe.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     "padding-x": "calc(var(--spacing) * 0.75)",
@@ -1492,7 +1492,7 @@ function yo(e) {
     t.observe(document, r);
   }), at(() => t == null ? void 0 : t.disconnect());
 }
-const $t = {
+const It = {
   props: {
     size: {
       type: String,
@@ -1504,9 +1504,9 @@ const $t = {
   name: E.EModal,
   props: {
     ...L.props,
-    ...$t.props,
+    ...It.props,
     size: {
-      ...$t.props.size,
+      ...It.props.size,
       _preset: !0
     },
     title: {
@@ -1613,11 +1613,11 @@ const $t = {
       Ct(() => K());
     }), Q(() => [p.stack.value], () => {
       const A = p.stack.value.find((C) => C.id === f);
-      A ? A.idle ? U(!0) : h.value ? A.idle || I(A.data, !0) : I(A.data) : h.value && U();
+      A ? A.idle ? U(!0) : h.value ? A.idle || $(A.data, !0) : $(A.data) : h.value && U();
     }, {
       deep: !0
     });
-    const I = async (A, C = !1) => {
+    const $ = async (A, C = !1) => {
       h.value = !0, C === !1 ? (t("open"), b.value = A) : t("show"), x.outside = new AbortController(), x.resize = new AbortController(), x.keydown = new AbortController(), window.addEventListener("resize", H, {
         signal: x.resize.signal
       }), window.addEventListener("keydown", (J) => Y(f, J), {
@@ -1736,9 +1736,9 @@ const $t = {
     ...L.props,
     ...V.props,
     ...te.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     checked: {
@@ -1759,7 +1759,7 @@ const $t = {
     ...L.emits,
     ...V.emits,
     ...te.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     size: "1.5rem",
@@ -1870,9 +1870,9 @@ const $t = {
     ...L.props,
     ...V.props,
     ...fe.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     options: {
@@ -1897,7 +1897,7 @@ const $t = {
     ...L.emits,
     ...V.emits,
     ...fe.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     "padding-x": "calc(var(--spacing) * 0.75)",
@@ -2039,9 +2039,9 @@ const $t = {
     ...L.props,
     ...V.props,
     ...te.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     iconChecked: {
@@ -2070,7 +2070,7 @@ const $t = {
     ...L.emits,
     ...V.emits,
     ...te.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     size: "1.5rem",
@@ -2188,9 +2188,9 @@ const $t = {
     ...L.props,
     ...V.props,
     ...fe.props,
-    ...$.props,
+    ...I.props,
     variant: {
-      ...$.props.variant,
+      ...I.props.variant,
       _preset: !0
     },
     rows: {
@@ -2227,7 +2227,7 @@ const $t = {
     ...L.emits,
     ...V.emits,
     ...fe.emits,
-    ...$.emits
+    ...I.emits
   },
   style: {
     "padding-x": "calc(var(--spacing) * 0.75)",
@@ -2496,7 +2496,7 @@ function Ke(e) {
     bottom: e.y + e.height
   };
 }
-function It(e, t, o) {
+function $t(e, t, o) {
   let {
     reference: r,
     floating: l
@@ -2558,7 +2558,7 @@ const Co = async (e, t, o) => {
   }), {
     x: g,
     y: p
-  } = It(c, r, u), y = r, f = {}, s = 0;
+  } = $t(c, r, u), y = r, f = {}, s = 0;
   for (let v = 0; v < i.length; v++) {
     const {
       name: h,
@@ -2596,7 +2596,7 @@ const Co = async (e, t, o) => {
       }) : T.rects), {
         x: g,
         y: p
-      } = It(c, y, u)), v = -1;
+      } = $t(c, y, u)), v = -1;
       continue;
     }
   }
@@ -2675,7 +2675,7 @@ const Lo = (e) => ({
     }, f = ct(l), s = st(f), v = await a.getDimensions(c), h = f === "y", d = h ? "top" : "left", b = h ? "bottom" : "right", S = h ? "clientHeight" : "clientWidth", k = n.reference[s] + n.reference[f] - y[f] - n.floating[s], T = y[f] - n.reference[f], w = await (a.getOffsetParent == null ? void 0 : a.getOffsetParent(c));
     let x = w ? w[S] : 0;
     (!x || !await (a.isElement == null ? void 0 : a.isElement(w))) && (x = i.floating[S] || n.floating[s]);
-    const O = k / 2 - T / 2, I = x / 2 - v[s] / 2 - 1, U = pe(p[d], I), Y = pe(p[b], I), j = U, K = x - v[s] - Y, P = x / 2 - v[s] / 2 + O, H = ot(j, P, K), A = !u.arrow && Se(l) != null && P != H && n.reference[s] / 2 - (P < j ? U : Y) - v[s] / 2 < 0, C = A ? P < j ? P - j : P - K : 0;
+    const O = k / 2 - T / 2, $ = x / 2 - v[s] / 2 - 1, U = pe(p[d], $), Y = pe(p[b], $), j = U, K = x - v[s] - Y, P = x / 2 - v[s] / 2 + O, H = ot(j, P, K), A = !u.arrow && Se(l) != null && P != H && n.reference[s] / 2 - (P < j ? U : Y) - v[s] / 2 < 0, C = A ? P < j ? P - j : P - K : 0;
     return {
       [f]: y[f] + C,
       data: {
@@ -2724,8 +2724,8 @@ const Lo = (e) => ({
         placement: l,
         overflows: x
       }], !x.every((j) => j <= 0)) {
-        var I, U;
-        const j = (((I = n.flip) == null ? void 0 : I.index) || 0) + 1, K = T[j];
+        var $, U;
+        const j = ((($ = n.flip) == null ? void 0 : $.index) || 0) + 1, K = T[j];
         if (K)
           return {
             data: {
@@ -2804,7 +2804,7 @@ const Bo = function(e) {
       };
     }
   };
-}, $o = function(e) {
+}, Io = function(e) {
   return e === void 0 && (e = {}), {
     name: "shift",
     options: e,
@@ -2889,7 +2889,7 @@ function Ae(e) {
   } = W(e);
   return /auto|scroll|overlay|hidden|clip/.test(t + r + o) && !["inline", "contents"].includes(l);
 }
-function Io(e) {
+function $o(e) {
   return ["table", "td", "th"].includes(re(e));
 }
 function dt(e) {
@@ -3156,7 +3156,7 @@ function Jt(e, t) {
   if (!G(e))
     return o;
   let r = Dt(e, t);
-  for (; r && Io(r) && W(r).position === "static"; )
+  for (; r && $o(r) && W(r).position === "static"; )
     r = Dt(r, t);
   return r && (re(r) === "html" || re(r) === "body" && W(r).position === "static" && !dt(r)) ? o : r || Fo(e) || o;
 }
@@ -3329,17 +3329,17 @@ function Zo(e, t, o) {
     };
     if (!g.value)
       return x;
-    const O = zt(g.value, p.value), I = zt(g.value, y.value);
+    const O = zt(g.value, p.value), $ = zt(g.value, y.value);
     return u.value ? {
       ...x,
-      transform: "translate(" + O + "px, " + I + "px)",
+      transform: "translate(" + O + "px, " + $ + "px)",
       ...Qt(g.value) >= 1.5 && {
         willChange: "transform"
       }
     } : {
       position: f.value,
       left: O + "px",
-      top: I + "px"
+      top: $ + "px"
     };
   });
   let b;
@@ -3483,7 +3483,7 @@ const Ue = {
       show: [],
       hide: []
     }, v = F(() => {
-      const w = [Bo(i.value.offset), $o({
+      const w = [Bo(i.value.offset), Io({
         padding: i.value.padding
       })];
       return i.value.flip && w.push(Ro()), i.value.arrow && w.push(Qo({
@@ -3506,8 +3506,8 @@ const Ue = {
         signal: f.mouseleave.signal
       })));
     }), at(() => {
-      var w, x, O, I;
-      (w = f.focusin) == null || w.abort(), (x = f.focusout) == null || x.abort(), (O = f.mouseenter) == null || O.abort(), (I = f.mouseleave) == null || I.abort();
+      var w, x, O, $;
+      (w = f.focusin) == null || w.abort(), (x = f.focusout) == null || x.abort(), (O = f.mouseenter) == null || O.abort(), ($ = f.mouseleave) == null || $.abort();
     });
     const b = () => {
       const w = typeof i.value.delay == "number" ? i.value.delay : i.value.delay.show;
@@ -3528,8 +3528,8 @@ const Ue = {
       k.update();
     });
     const T = F(() => {
-      var I, U, Y;
-      const w = i.value.arrow !== !1 ? (I = i.value.arrow) == null ? void 0 : I.size : 0;
+      var $, U, Y;
+      const w = i.value.arrow !== !1 ? ($ = i.value.arrow) == null ? void 0 : $.size : 0;
       let x, O;
       return (U = k.middlewareData.value.arrow) != null && U.x && (x = k.middlewareData.value.arrow.x), (Y = k.middlewareData.value.arrow) != null && Y.y && (O = k.middlewareData.value.arrow.y), {
         width: `${w}px`,
@@ -3565,12 +3565,12 @@ const Ue = {
           appear: !0
         }, {
           default: () => {
-            var O, I;
+            var O, $;
             return [p.value && !i.value.disabled && m("div", {
               ref: c,
               class: o.base,
               style: k.floatingStyles.value
-            }, [i.value.binding ? m("span", null, [i.value.text]) : (I = (O = l.node).content) == null ? void 0 : I.call(O, {}), i.value.arrow !== !1 && m("div", {
+            }, [i.value.binding ? m("span", null, [i.value.text]) : ($ = (O = l.node).content) == null ? void 0 : $.call(O, {}), i.value.arrow !== !1 && m("div", {
               class: o.element("arrow"),
               ref: g,
               style: T.value
@@ -3635,7 +3635,7 @@ const Ue = {
       e.binding.value = o;
     }
   }
-}, ir = "0.1.4";
+}, ir = "0.1.5";
 function gr(e = {}) {
   const t = e.components || [], o = [];
   q(e, !0);

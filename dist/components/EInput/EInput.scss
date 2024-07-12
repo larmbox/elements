@@ -32,10 +32,9 @@ $component: c('EInput');
 .#{$component} {
   display: inline-flex;
   flex-direction: column;
+  line-height: v(line-height, $component);
 
   @include variants;
-
-  line-height: v(line-height, $component);
 
   &.#{$component}--block {
     display: flex;
@@ -64,7 +63,8 @@ $component: c('EInput');
     outline: none;
     appearance: none;
 
-    transition: border-color v(transition-time) v(transition-type),
+    transition:
+      border-color v(transition-time) v(transition-type),
       box-shadow v(transition-time) v(transition-type);
 
     &::placeholder {

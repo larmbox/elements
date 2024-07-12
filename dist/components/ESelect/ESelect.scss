@@ -37,10 +37,9 @@ $component: c('ESelect');
 .#{$component} {
   display: inline-flex;
   flex-direction: column;
+  line-height: v(line-height, $component);
 
   @include variants;
-
-  line-height: v(line-height, $component);
 
   &.#{$component}--block {
     display: flex;

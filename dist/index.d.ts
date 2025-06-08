@@ -5,7 +5,7 @@ export { useFocusTrap } from './composables/useFocusTrap';
 export { useRouteObserver } from './composables/useRouteObserver';
 export { default as createElements } from './create-elements';
 export { default as version } from './version';
-declare module '@vue/runtime-core' {
+declare module 'vue' {
     interface GlobalComponents {
         EButton: (typeof import('./components'))['EButton'];
         ECheckbox: (typeof import('./components'))['ECheckbox'];

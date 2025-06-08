@@ -3635,7 +3635,7 @@ const Ue = {
       e.binding.value = o;
     }
   }
-}, ir = "0.1.5";
+}, ir = "0.1.6";
 function gr(e = {}) {
   const t = e.components || [], o = [];
   q(e, !0);
